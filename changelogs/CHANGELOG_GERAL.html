@@ -1,121 +1,223 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Novidades e Melhorias — LC Sistemas ERP</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      background: #f0f2f5;
-      color: #1a1a2e;
-      padding: 40px 20px;
+      font-family: 'Montserrat', system-ui, sans-serif;
+      background: #F7F7F7;
+      color: #333333;
+      padding: 40px 20px 60px;
     }
 
-    .container { max-width: 900px; margin: 0 auto; }
+    .container { max-width: 920px; margin: 0 auto; }
 
-    /* ── Header ── */
-    header {
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
-      color: #fff;
-      border-radius: 16px;
-      padding: 40px 48px;
-      margin-bottom: 28px;
-      box-shadow: 0 8px 32px rgba(15,52,96,.35);
+    /* ── Header bar ── */
+    .doc-header {
+      background: #FFB300;
+      padding: 24px 48px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border-radius: 8px 8px 0 0;
     }
-    header h1 {
-      font-size: 1.8rem;
+    .lc-logo {
+      display: flex;
+      align-items: baseline;
+      gap: 1px;
+      line-height: 1;
+    }
+    .lc-logo .lc-bold {
       font-weight: 700;
-      letter-spacing: -.5px;
+      font-size: 22px;
+      color: #1C1C1C;
+      letter-spacing: -0.5px;
+    }
+    .lc-logo .lc-light {
+      font-weight: 400;
+      font-size: 16px;
+      color: #1C1C1C;
+    }
+    .header-divider {
+      width: 1px;
+      height: 32px;
+      background: rgba(4,37,81,0.25);
+    }
+    .doc-type-badge {
+      background: #1C1C1C;
+      color: #FFB300;
+      border-radius: 4px;
+      padding: 4px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    /* ── Hero title block ── */
+    .doc-hero {
+      background: #1C1C1C;
+      padding: 32px 48px 28px;
+      margin-bottom: 0;
+    }
+    .doc-hero h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      letter-spacing: -0.5px;
       margin-bottom: 6px;
     }
-    header .subtitle {
-      font-size: .95rem;
-      color: #94a3c0;
+    .doc-hero .subtitle {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.65);
       margin-bottom: 20px;
+      font-weight: 400;
     }
-    header .meta { display: flex; gap: 10px; flex-wrap: wrap; }
-    header .meta span {
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.12);
-      border-radius: 8px;
-      padding: 6px 14px;
-      font-size: .8rem;
-      color: #c8d4e8;
+    .doc-meta {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .doc-meta span {
+      background: rgba(255,179,0,0.15);
+      border: 1px solid rgba(255,179,0,0.35);
+      border-radius: 5px;
+      padding: 5px 14px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #FFB300;
+      letter-spacing: 0.3px;
     }
 
-    /* ── Stats ── */
+    /* ── Stats row ── */
     .stats-row {
       display: flex;
-      gap: 12px;
-      margin-bottom: 32px;
-      flex-wrap: wrap;
+      gap: 0;
+      background: #FFFFFF;
+      border-bottom: 1px solid #ebebeb;
+      margin-bottom: 28px;
+      border-radius: 0 0 8px 8px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      overflow: hidden;
     }
     .stat-card {
       flex: 1;
-      min-width: 120px;
-      background: #fff;
-      border-radius: 12px;
-      padding: 20px;
+      padding: 22px 20px;
       text-align: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,.06);
-      border-top: 3px solid #0f3460;
+      border-right: 1px solid #f0f0f0;
+      position: relative;
     }
-    .stat-card.s-new { border-top-color: #3a86e0; }
-    .stat-card.s-fix { border-top-color: #e05252; }
-    .stat-card.s-imp { border-top-color: #e09e30; }
+    .stat-card:last-child { border-right: none; }
+    .stat-card::before {
+      content: '';
+      display: block;
+      height: 3px;
+      position: absolute;
+      top: 0; left: 0; right: 0;
+    }
+    .stat-card.s-total::before { background: #1C1C1C; }
+    .stat-card.s-feat::before  { background: #643296; }
+    .stat-card.s-fix::before   { background: #d93025; }
+    .stat-card.s-perf::before  { background: #FFB300; }
     .stat-number {
       font-size: 2rem;
-      font-weight: 800;
+      font-weight: 700;
       line-height: 1;
-      margin-bottom: 6px;
-      color: #1a1a2e;
+      margin-bottom: 5px;
+      color: #1C1C1C;
     }
-    .stat-label { font-size: .75rem; color: #64748b; line-height: 1.3; }
+    .stat-card.s-feat .stat-number { color: #643296; }
+    .stat-card.s-fix  .stat-number { color: #d93025; }
+    .stat-card.s-perf .stat-number { color: #b45309; }
+    .stat-label { font-size: 0.72rem; color: #515151; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    /* ── Legend ── */
+    .legend-bar {
+      background: #FFFFFF;
+      border-radius: 8px;
+      padding: 14px 22px;
+      margin-bottom: 28px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .legend-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: #515151;
+      margin-right: 4px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      color: #333333;
+      font-weight: 500;
+    }
+    .legend-swatch {
+      width: 12px;
+      height: 24px;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+    .sw-feat { background: #643296; }
+    .sw-fix  { background: #d93025; }
+    .sw-perf { background: #FFB300; }
 
     /* ── Month section ── */
-    .month-section { margin-bottom: 32px; }
+    .month-section { margin-bottom: 36px; }
     .month-header {
       display: flex;
       align-items: center;
       gap: 14px;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
     .month-badge {
-      background: #0f3460;
-      color: #e2f0ff;
-      font-size: .75rem;
+      background: #643296;
+      color: #FFFFFF;
+      font-size: 0.72rem;
       font-weight: 700;
-      letter-spacing: .8px;
+      letter-spacing: 0.8px;
       text-transform: uppercase;
       padding: 6px 18px;
-      border-radius: 20px;
+      border-radius: 5px;
       white-space: nowrap;
     }
-    .month-count { font-size: .75rem; color: #94a3b8; white-space: nowrap; }
-    .month-line { flex: 1; height: 1px; background: #d1d9e6; }
+    .month-count { font-size: 0.75rem; color: #515151; white-space: nowrap; font-weight: 500; }
+    .month-line { flex: 1; height: 1px; background: #e0e0e0; }
 
     /* ── Entry card ── */
     .card {
-      background: #fff;
-      border-radius: 10px;
-      border-left: 4px solid #0f3460;
-      padding: 13px 18px;
-      margin-bottom: 7px;
-      box-shadow: 0 1px 4px rgba(0,0,0,.05);
+      background: #FFFFFF;
+      border-radius: 8px;
+      border-left: 4px solid #1C1C1C;
+      padding: 12px 18px;
+      margin-bottom: 6px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
       gap: 12px;
       flex-wrap: wrap;
-      transition: box-shadow .18s;
+      transition: box-shadow 0.15s, transform 0.15s;
     }
-    .card:hover { box-shadow: 0 3px 14px rgba(0,0,0,.10); }
-    .card.fix  { border-left-color: #e05252; }
-    .card.feat { border-left-color: #3a86e0; }
-    .card.perf { border-left-color: #e09e30; }
+    .card:hover {
+      box-shadow: 0 4px 18px rgba(0,0,0,0.13);
+      transform: translateY(-1px);
+    }
+    .card.fix  { border-left-color: #d93025; }
+    .card.feat { border-left-color: #643296; }
+    .card.perf { border-left-color: #FFB300; }
 
     .card-left {
       display: flex;
@@ -125,17 +227,18 @@
       min-width: 0;
     }
     .card-date {
-      font-size: .72rem;
-      color: #94a3b8;
+      font-size: 0.7rem;
+      color: #515151;
       white-space: nowrap;
       min-width: 38px;
       padding-top: 3px;
+      font-weight: 500;
     }
     .card-title {
-      font-size: .9rem;
+      font-size: 0.88rem;
       font-weight: 500;
-      color: #1a1a2e;
-      line-height: 1.45;
+      color: #1C1C1C;
+      line-height: 1.5;
     }
 
     .tag-row {
@@ -147,17 +250,17 @@
       padding-top: 1px;
     }
     .tag {
-      font-size: .68rem;
+      font-size: 0.66rem;
       font-weight: 700;
-      letter-spacing: .4px;
+      letter-spacing: 0.4px;
       text-transform: uppercase;
-      padding: 3px 9px;
-      border-radius: 10px;
+      padding: 3px 8px;
+      border-radius: 5px;
     }
-    .tag.fix   { background: #fde8e8; color: #b91c1c; }
-    .tag.feat  { background: #dbeafe; color: #1d4ed8; }
-    .tag.perf  { background: #fef3c7; color: #92400e; }
-    .tag.mod        { background: #e0f2fe; color: #0369a1; }
+    .tag.fix       { background: #fde8e8; color: #b91c1c; }
+    .tag.feat      { background: #f0e8f7; color: #643296; }
+    .tag.perf      { background: #fff8e1; color: #b45309; }
+    .tag.mod        { background: rgba(28,28,28,0.08); color: #1C1C1C; }
     .tag.mod-fin    { background: #d1fae5; color: #065f46; }
     .tag.mod-farm   { background: #fdf2f8; color: #9d174d; }
     .tag.mod-rel    { background: #fff7ed; color: #9a3412; }
@@ -167,137 +270,79 @@
     .tag.mod-balcao { background: #eff6ff; color: #1e40af; }
     .tag.mod-pdv    { background: #faf5ff; color: #6b21a8; }
 
-    /* ── Summary bar ── */
-    .summary-bar {
-      background: #fff;
-      border-radius: 12px;
-      padding: 18px 24px;
-      margin-bottom: 28px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.06);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-
-    .summary-legend {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: .82rem;
-      color: #475569;
-    }
-    .legend-swatch {
-      width: 14px;
-      height: 28px;
-      border-radius: 3px;
-      flex-shrink: 0;
-    }
-    .swatch-feat { background: #3a86e0; }
-    .swatch-fix  { background: #e05252; }
-    .swatch-perf { background: #e09e30; }
-
-    .summary-counts {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .count-chip {
-      display: flex;
-      align-items: baseline;
-      gap: 6px;
-      padding: 6px 14px;
-      border-radius: 20px;
-      border: 1px solid transparent;
-    }
-    .chip-feat { background: #dbeafe; border-color: #bfdbfe; }
-    .chip-fix  { background: #fde8e8; border-color: #fecaca; }
-    .chip-perf { background: #fef3c7; border-color: #fde68a; }
-
-    .count-num {
-      font-size: 1.1rem;
-      font-weight: 800;
-      line-height: 1;
-    }
-    .chip-feat .count-num { color: #1d4ed8; }
-    .chip-fix  .count-num { color: #b91c1c; }
-    .chip-perf .count-num { color: #92400e; }
-
-    .count-lbl {
-      font-size: .75rem;
-      font-weight: 600;
-    }
-    .chip-feat .count-lbl { color: #1d4ed8; }
-    .chip-fix  .count-lbl { color: #b91c1c; }
-    .chip-perf .count-lbl { color: #92400e; }
-
+    /* ── Footer ── */
     footer {
       text-align: center;
-      margin-top: 48px;
-      font-size: .8rem;
-      color: #94a3b8;
+      margin-top: 52px;
+      padding: 20px;
+      font-size: 0.78rem;
+      color: #515151;
+      font-weight: 500;
+      border-top: 1px solid #e0e0e0;
     }
+    footer strong { color: #1C1C1C; }
 
     @media (max-width: 640px) {
-      body { padding: 20px 12px; }
-      header { padding: 28px 24px; }
-      header h1 { font-size: 1.4rem; }
+      body { padding: 16px 10px 40px; }
+      .doc-header { padding: 18px 20px; }
+      .doc-hero { padding: 24px 20px 20px; }
+      .doc-hero h1 { font-size: 1.35rem; }
+      .stats-row { flex-wrap: wrap; }
+      .stat-card { min-width: 50%; }
       .card { flex-direction: column; gap: 8px; }
       .tag-row { padding-top: 0; }
-      .stat-card { min-width: 100px; padding: 14px 12px; }
-      .stat-number { font-size: 1.6rem; }
     }
   </style>
 </head>
 <body>
 <div class="container">
 
-  <header>
+  <!-- ── Header bar ── -->
+  <div class="doc-header">
+    <div class="lc-logo">
+      <span class="lc-bold">LC</span><span class="lc-light">sistemas</span>
+    </div>
+    <div class="header-divider"></div>
+    <span class="doc-type-badge">Changelog</span>
+  </div>
+
+  <!-- ── Hero ── -->
+  <div class="doc-hero">
     <h1>Novidades e Melhorias</h1>
     <p class="subtitle">Histórico de atualizações do sistema — LC Sistemas ERP</p>
-    <div class="meta">
+    <div class="doc-meta">
       <span>Dez 2025 – Mai 2026</span>
       <span>Versão 3.2.0</span>
       <span>89 atualizações entregues</span>
     </div>
-  </header>
+  </div>
 
-  <!-- ════ LEGENDA + CONTAGEM ════ -->
-  <div class="summary-bar">
-    <div class="summary-legend">
-      <div class="legend-item">
-        <div class="legend-swatch swatch-feat"></div>
-        <span>Novo recurso</span>
-      </div>
-      <div class="legend-item">
-        <div class="legend-swatch swatch-fix"></div>
-        <span>Correção</span>
-      </div>
-      <div class="legend-item">
-        <div class="legend-swatch swatch-perf"></div>
-        <span>Melhoria</span>
-      </div>
+  <!-- ── Stats ── -->
+  <div class="stats-row">
+    <div class="stat-card s-total">
+      <div class="stat-number">89</div>
+      <div class="stat-label">Total</div>
     </div>
-    <div class="summary-counts">
-      <div class="count-chip chip-feat">
-        <span class="count-num">40</span>
-        <span class="count-lbl">Novos recursos</span>
-      </div>
-      <div class="count-chip chip-fix">
-        <span class="count-num">44</span>
-        <span class="count-lbl">Correções</span>
-      </div>
-      <div class="count-chip chip-perf">
-        <span class="count-num">5</span>
-        <span class="count-lbl">Melhorias</span>
-      </div>
+    <div class="stat-card s-feat">
+      <div class="stat-number">40</div>
+      <div class="stat-label">Novos recursos</div>
     </div>
+    <div class="stat-card s-fix">
+      <div class="stat-number">44</div>
+      <div class="stat-label">Correções</div>
+    </div>
+    <div class="stat-card s-perf">
+      <div class="stat-number">5</div>
+      <div class="stat-label">Melhorias</div>
+    </div>
+  </div>
+
+  <!-- ── Legend ── -->
+  <div class="legend-bar">
+    <span class="legend-label">Legenda</span>
+    <div class="legend-item"><div class="legend-swatch sw-feat"></div>Novo recurso</div>
+    <div class="legend-item"><div class="legend-swatch sw-fix"></div>Correção</div>
+    <div class="legend-item"><div class="legend-swatch sw-perf"></div>Melhoria</div>
   </div>
 
   <!-- ════ MAIO 2026 ════ -->
@@ -889,7 +934,7 @@
   </div>
 
   <footer>
-    Gerado em 14/05/2026 &nbsp;·&nbsp; LC Sistemas ERP &nbsp;·&nbsp; Versão 3.2.0
+    Gerado em 14/05/2026 &nbsp;·&nbsp; <strong>LC Sistemas ERP</strong> &nbsp;·&nbsp; Versão 3.2.0
   </footer>
 
 </div>

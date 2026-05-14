@@ -1,1198 +1,897 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Changelog Geral — LC Sistemas ERP</title>
-<style>
-  :root {
-    --bg: #0f1117;
-    --bg2: #181b24;
-    --bg3: #1e2130;
-    --border: #2a2f42;
-    --text: #e2e8f0;
-    --muted: #8892a4;
-    --accent: #6366f1;
-    --accent2: #818cf8;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Novidades e Melhorias — LC Sistemas ERP</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    --tag-fiscal:    #0e7490;
-    --tag-fiscal-bg: #083344;
-    --tag-fin:       #0f766e;
-    --tag-fin-bg:    #042f2e;
-    --tag-pdv:       #7c3aed;
-    --tag-pdv-bg:    #2e1065;
-    --tag-rel:       #b45309;
-    --tag-rel-bg:    #451a03;
-    --tag-est:       #15803d;
-    --tag-est-bg:    #052e16;
-    --tag-farm:      #be185d;
-    --tag-farm-bg:   #500724;
-    --tag-sis:       #374151;
-    --tag-sis-bg:    #111827;
-    --tag-tef:       #9333ea;
-    --tag-tef-bg:    #3b0764;
-    --tag-balcao:    #0369a1;
-    --tag-balcao-bg: #082f49;
-    --tag-fix:       #dc2626;
-    --tag-fix-bg:    #450a0a;
-  }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #f0f2f5;
+      color: #1a1a2e;
+      padding: 40px 20px;
+    }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+    .container { max-width: 900px; margin: 0 auto; }
 
-  body {
-    font-family: 'Segoe UI', system-ui, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.6;
-  }
+    /* ── Header ── */
+    header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
+      color: #fff;
+      border-radius: 16px;
+      padding: 40px 48px;
+      margin-bottom: 28px;
+      box-shadow: 0 8px 32px rgba(15,52,96,.35);
+    }
+    header h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -.5px;
+      margin-bottom: 6px;
+    }
+    header .subtitle {
+      font-size: .95rem;
+      color: #94a3c0;
+      margin-bottom: 20px;
+    }
+    header .meta { display: flex; gap: 10px; flex-wrap: wrap; }
+    header .meta span {
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 8px;
+      padding: 6px 14px;
+      font-size: .8rem;
+      color: #c8d4e8;
+    }
 
-  /* ── Header ── */
-  .header {
-    background: linear-gradient(135deg, #1a1d2e 0%, #0f1117 100%);
-    border-bottom: 1px solid var(--border);
-    padding: 40px 48px 36px;
-  }
-  .header-inner { max-width: 960px; margin: 0 auto; }
-  .header h1 { font-size: 1.9rem; font-weight: 700; letter-spacing: -0.5px; }
-  .header h1 span { color: var(--accent2); }
-  .header p { color: var(--muted); margin-top: 6px; font-size: 0.95rem; }
-  .header-meta {
-    display: flex; gap: 24px; margin-top: 20px;
-    flex-wrap: wrap;
-  }
-  .meta-pill {
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 4px 14px;
-    font-size: 0.82rem;
-    color: var(--muted);
-  }
-  .meta-pill strong { color: var(--text); }
+    /* ── Stats ── */
+    .stats-row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+    .stat-card {
+      flex: 1;
+      min-width: 120px;
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,.06);
+      border-top: 3px solid #0f3460;
+    }
+    .stat-card.s-new { border-top-color: #3a86e0; }
+    .stat-card.s-fix { border-top-color: #e05252; }
+    .stat-card.s-imp { border-top-color: #e09e30; }
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 6px;
+      color: #1a1a2e;
+    }
+    .stat-label { font-size: .75rem; color: #64748b; line-height: 1.3; }
 
-  /* ── Legend ── */
-  .legend {
-    max-width: 960px; margin: 28px auto 0;
-    padding: 0 48px;
-  }
-  .legend-grid {
-    display: flex; flex-wrap: wrap; gap: 8px;
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 14px 18px;
-  }
+    /* ── Month section ── */
+    .month-section { margin-bottom: 32px; }
+    .month-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .month-badge {
+      background: #0f3460;
+      color: #e2f0ff;
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      padding: 6px 18px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+    .month-count { font-size: .75rem; color: #94a3b8; white-space: nowrap; }
+    .month-line { flex: 1; height: 1px; background: #d1d9e6; }
 
-  /* ── Main layout ── */
-  .container { max-width: 960px; margin: 0 auto; padding: 36px 48px 80px; }
+    /* ── Entry card ── */
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      border-left: 4px solid #0f3460;
+      padding: 13px 18px;
+      margin-bottom: 7px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.05);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      transition: box-shadow .18s;
+    }
+    .card:hover { box-shadow: 0 3px 14px rgba(0,0,0,.10); }
+    .card.fix  { border-left-color: #e05252; }
+    .card.feat { border-left-color: #3a86e0; }
+    .card.perf { border-left-color: #e09e30; }
 
-  /* ── Month block ── */
-  .month-block { margin-bottom: 48px; }
-  .month-header {
-    display: flex; align-items: center; gap: 16px;
-    margin-bottom: 20px;
-  }
-  .month-title {
-    font-size: 1.3rem; font-weight: 700; color: var(--text);
-  }
-  .month-count {
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 2px 10px;
-    font-size: 0.78rem;
-    color: var(--muted);
-  }
-  .month-line {
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
+    .card-left {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      flex: 1;
+      min-width: 0;
+    }
+    .card-date {
+      font-size: .72rem;
+      color: #94a3b8;
+      white-space: nowrap;
+      min-width: 38px;
+      padding-top: 3px;
+    }
+    .card-title {
+      font-size: .9rem;
+      font-weight: 500;
+      color: #1a1a2e;
+      line-height: 1.45;
+    }
 
-  /* ── Entry cards ── */
-  .entries { display: flex; flex-direction: column; gap: 6px; }
+    .tag-row {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+      flex-shrink: 0;
+      align-items: flex-start;
+      padding-top: 1px;
+    }
+    .tag {
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .4px;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 10px;
+    }
+    .tag.fix   { background: #fde8e8; color: #b91c1c; }
+    .tag.feat  { background: #dbeafe; color: #1d4ed8; }
+    .tag.perf  { background: #fef3c7; color: #92400e; }
+    .tag.mod        { background: #e0f2fe; color: #0369a1; }
+    .tag.mod-fin    { background: #d1fae5; color: #065f46; }
+    .tag.mod-farm   { background: #fdf2f8; color: #9d174d; }
+    .tag.mod-rel    { background: #fff7ed; color: #9a3412; }
+    .tag.mod-est    { background: #f0fdf4; color: #166534; }
+    .tag.mod-tef    { background: #f5f3ff; color: #5b21b6; }
+    .tag.mod-sis    { background: #f1f5f9; color: #475569; }
+    .tag.mod-balcao { background: #eff6ff; color: #1e40af; }
+    .tag.mod-pdv    { background: #faf5ff; color: #6b21a8; }
 
-  .entry {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 11px 16px;
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    transition: border-color 0.15s;
-  }
-  .entry:hover { border-color: #3d4560; }
+    /* ── Summary bar ── */
+    .summary-bar {
+      background: #fff;
+      border-radius: 12px;
+      padding: 18px 24px;
+      margin-bottom: 28px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.06);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
 
-  .entry-date {
-    font-size: 0.75rem;
-    color: var(--muted);
-    white-space: nowrap;
-    min-width: 52px;
-    padding-top: 2px;
-    font-variant-numeric: tabular-nums;
-  }
+    .summary-legend {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .82rem;
+      color: #475569;
+    }
+    .legend-swatch {
+      width: 14px;
+      height: 28px;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+    .swatch-feat { background: #3a86e0; }
+    .swatch-fix  { background: #e05252; }
+    .swatch-perf { background: #e09e30; }
 
-  .entry-body { flex: 1; min-width: 0; }
-  .entry-text {
-    font-size: 0.9rem;
-    color: var(--text);
-    line-height: 1.45;
-  }
-  .entry-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 5px; }
+    .summary-counts {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .count-chip {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid transparent;
+    }
+    .chip-feat { background: #dbeafe; border-color: #bfdbfe; }
+    .chip-fix  { background: #fde8e8; border-color: #fecaca; }
+    .chip-perf { background: #fef3c7; border-color: #fde68a; }
 
-  /* ── Tags ── */
-  .tag {
-    display: inline-block;
-    border-radius: 4px;
-    padding: 1px 8px;
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.3px;
-    border: 1px solid transparent;
-  }
-  .tag-fiscal  { background: var(--tag-fiscal-bg);  color: #22d3ee; border-color: var(--tag-fiscal); }
-  .tag-fin     { background: var(--tag-fin-bg);     color: #2dd4bf; border-color: var(--tag-fin); }
-  .tag-pdv     { background: var(--tag-pdv-bg);     color: #a78bfa; border-color: var(--tag-pdv); }
-  .tag-rel     { background: var(--tag-rel-bg);     color: #fbbf24; border-color: var(--tag-rel); }
-  .tag-est     { background: var(--tag-est-bg);     color: #4ade80; border-color: var(--tag-est); }
-  .tag-farm    { background: var(--tag-farm-bg);    color: #f472b6; border-color: var(--tag-farm); }
-  .tag-sis     { background: var(--tag-sis-bg);     color: #9ca3af; border-color: #4b5563; }
-  .tag-tef     { background: var(--tag-tef-bg);     color: #c084fc; border-color: var(--tag-tef); }
-  .tag-balcao  { background: var(--tag-balcao-bg);  color: #38bdf8; border-color: var(--tag-balcao); }
-  .tag-fix     { background: var(--tag-fix-bg);     color: #f87171; border-color: var(--tag-fix); }
-  .tag-new     { background: #1a2e1a; color: #86efac; border-color: #166534; }
+    .count-num {
+      font-size: 1.1rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+    .chip-feat .count-num { color: #1d4ed8; }
+    .chip-fix  .count-num { color: #b91c1c; }
+    .chip-perf .count-num { color: #92400e; }
 
-  /* ── Stats section ── */
-  .stats-section {
-    background: var(--bg2);
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    padding: 32px 48px;
-  }
-  .stats-inner { max-width: 960px; margin: 0 auto; }
+    .count-lbl {
+      font-size: .75rem;
+      font-weight: 600;
+    }
+    .chip-feat .count-lbl { color: #1d4ed8; }
+    .chip-fix  .count-lbl { color: #b91c1c; }
+    .chip-perf .count-lbl { color: #92400e; }
 
-  .stats-row {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin-bottom: 32px;
-  }
+    footer {
+      text-align: center;
+      margin-top: 48px;
+      font-size: .8rem;
+      color: #94a3b8;
+    }
 
-  .stat-card {
-    flex: 1;
-    min-width: 120px;
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 18px 20px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .stat-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-  }
-  .stat-total::before  { background: #6366f1; }
-  .stat-func::before   { background: #8b5cf6; }
-  .stat-new::before    { background: #22c55e; }
-  .stat-fix::before    { background: #ef4444; }
-  .stat-imp::before    { background: #f59e0b; }
-
-  .stat-number {
-    font-size: 2rem;
-    font-weight: 800;
-    line-height: 1;
-    margin-bottom: 6px;
-    letter-spacing: -1px;
-  }
-  .stat-total .stat-number  { color: #818cf8; }
-  .stat-func .stat-number   { color: #a78bfa; }
-  .stat-new .stat-number    { color: #4ade80; }
-  .stat-fix .stat-number    { color: #f87171; }
-  .stat-imp .stat-number    { color: #fbbf24; }
-
-  .stat-label {
-    font-size: 0.75rem;
-    color: var(--muted);
-    line-height: 1.3;
-  }
-
-  /* ── Module bars ── */
-  .modules-title {
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    margin-bottom: 14px;
-  }
-  .modules-grid { display: flex; flex-direction: column; gap: 7px; }
-
-  .mod-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .mod-name {
-    font-size: 0.8rem;
-    color: var(--muted);
-    width: 160px;
-    flex-shrink: 0;
-    text-align: right;
-  }
-  .mod-bar-wrap {
-    flex: 1;
-    background: var(--bg3);
-    border-radius: 4px;
-    height: 8px;
-    overflow: hidden;
-  }
-  .mod-bar {
-    height: 100%;
-    border-radius: 4px;
-    background: #4f46e5;
-    transition: width 0.3s ease;
-  }
-  .mod-bar-fiscal  { background: #0e7490; }
-  .mod-bar-pdv     { background: #7c3aed; }
-  .mod-bar-rel     { background: #b45309; }
-  .mod-bar-farm    { background: #be185d; }
-  .mod-bar-balcao  { background: #0369a1; }
-  .mod-bar-est     { background: #15803d; }
-  .mod-bar-sis     { background: #374151; }
-
-  .mod-count {
-    font-size: 0.78rem;
-    color: var(--muted);
-    font-variant-numeric: tabular-nums;
-    width: 28px;
-    flex-shrink: 0;
-  }
-
-  /* ── Responsive ── */
-  @media (max-width: 640px) {
-    .header { padding: 28px 20px 24px; }
-    .container { padding: 24px 20px 60px; }
-    .legend { padding: 0 20px; }
-    .stats-section { padding: 24px 20px; }
-    .entry { flex-direction: column; gap: 6px; }
-    .entry-date { min-width: auto; }
-    .mod-name { width: 110px; font-size: 0.72rem; }
-    .stats-row { gap: 8px; }
-    .stat-card { min-width: 100px; padding: 14px 12px; }
-    .stat-number { font-size: 1.6rem; }
-  }
-</style>
+    @media (max-width: 640px) {
+      body { padding: 20px 12px; }
+      header { padding: 28px 24px; }
+      header h1 { font-size: 1.4rem; }
+      .card { flex-direction: column; gap: 8px; }
+      .tag-row { padding-top: 0; }
+      .stat-card { min-width: 100px; padding: 14px 12px; }
+      .stat-number { font-size: 1.6rem; }
+    }
+  </style>
 </head>
 <body>
-
-<!-- ══════════════ HEADER ══════════════ -->
-<div class="header">
-  <div class="header-inner">
-    <h1>Changelog <span>LC Sistemas ERP</span></h1>
-    <p>Histórico geral de alterações do sistema</p>
-    <div class="header-meta">
-      <span class="meta-pill">Período: <strong>22/12/2025 → 12/05/2026</strong></span>
-      <span class="meta-pill">Branch: <strong>realese-lucas</strong></span>
-      <span class="meta-pill">Versão: <strong>V3.2.0</strong></span>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════ LEGEND ══════════════ -->
-<div class="legend">
-  <div class="legend-grid">
-    <span class="tag tag-new">NOVO</span>
-    <span class="tag tag-fix">CORREÇÃO</span>
-    <span class="tag tag-fiscal">FISCAL</span>
-    <span class="tag tag-fin">FINANCEIRO</span>
-    <span class="tag tag-pdv">PDV</span>
-    <span class="tag tag-rel">RELATÓRIO</span>
-    <span class="tag tag-est">ESTOQUE</span>
-    <span class="tag tag-farm">FARMÁCIA</span>
-    <span class="tag tag-balcao">BALCÃO</span>
-    <span class="tag tag-tef">TEF</span>
-    <span class="tag tag-sis">SISTEMA</span>
-  </div>
-</div>
-
-<!-- ══════════════ STATS ══════════════ -->
-<div class="stats-section">
-  <div class="stats-inner">
-
-    <div class="stats-row">
-      <div class="stat-card stat-total">
-        <div class="stat-number">143</div>
-        <div class="stat-label">Commits no período</div>
-      </div>
-      <div class="stat-card stat-func">
-        <div class="stat-number">121</div>
-        <div class="stat-label">Commits funcionais</div>
-      </div>
-      <div class="stat-card stat-new">
-        <div class="stat-number">46</div>
-        <div class="stat-label">Implementações novas</div>
-      </div>
-      <div class="stat-card stat-fix">
-        <div class="stat-number">58</div>
-        <div class="stat-label">Correções</div>
-      </div>
-      <div class="stat-card stat-imp">
-        <div class="stat-number">17</div>
-        <div class="stat-label">Melhorias / Refatorações</div>
-      </div>
-    </div>
-
-    <div class="modules-title">Distribuição por módulo</div>
-    <div class="modules-grid">
-      <div class="mod-row">
-        <span class="mod-name">Financeiro</span>
-        <div class="mod-bar-wrap"><div class="mod-bar" style="width:93%"></div></div>
-        <span class="mod-count">~28</span>
-      </div>
-      <div class="mod-row">
-        <span class="mod-name">Fiscal / NF-e</span>
-        <div class="mod-bar-wrap"><div class="mod-bar mod-bar-fiscal" style="width:67%"></div></div>
-        <span class="mod-count">~20</span>
-      </div>
-      <div class="mod-row">
-        <span class="mod-name">PDV</span>
-        <div class="mod-bar-wrap"><div class="mod-bar mod-bar-pdv" style="width:47%"></div></div>
-        <span class="mod-count">~14</span>
-      </div>
-      <div class="mod-row">
-        <span class="mod-name">Relatórios</span>
-        <div class="mod-bar-wrap"><div class="mod-bar mod-bar-rel" style="width:37%"></div></div>
-        <span class="mod-count">~11</span>
-      </div>
-      <div class="mod-row">
-        <span class="mod-name">Farmácia / Imendes</span>
-        <div class="mod-bar-wrap"><div class="mod-bar mod-bar-farm" style="width:47%"></div></div>
-        <span class="mod-count">~14</span>
-      </div>
-      <div class="mod-row">
-        <span class="mod-name">Balcão</span>
-        <div class="mod-bar-wrap"><div class="mod-bar mod-bar-balcao" style="width:23%"></div></div>
-        <span class="mod-count">~7</span>
-      </div>
-      <div class="mod-row">
-        <span class="mod-name">Estoque / Produto</span>
-        <div class="mod-bar-wrap"><div class="mod-bar mod-bar-est" style="width:23%"></div></div>
-        <span class="mod-count">~7</span>
-      </div>
-      <div class="mod-row">
-        <span class="mod-name">Sistema / Infra</span>
-        <div class="mod-bar-wrap"><div class="mod-bar mod-bar-sis" style="width:53%"></div></div>
-        <span class="mod-count">~16</span>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<!-- ══════════════ CONTENT ══════════════ -->
 <div class="container">
 
+  <header>
+    <h1>Novidades e Melhorias</h1>
+    <p class="subtitle">Histórico de atualizações do sistema — LC Sistemas ERP</p>
+    <div class="meta">
+      <span>Dez 2025 – Mai 2026</span>
+      <span>Versão 3.2.0</span>
+      <span>89 atualizações entregues</span>
+    </div>
+  </header>
+
+  <!-- ════ LEGENDA + CONTAGEM ════ -->
+  <div class="summary-bar">
+    <div class="summary-legend">
+      <div class="legend-item">
+        <div class="legend-swatch swatch-feat"></div>
+        <span>Novo recurso</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-swatch swatch-fix"></div>
+        <span>Correção</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-swatch swatch-perf"></div>
+        <span>Melhoria</span>
+      </div>
+    </div>
+    <div class="summary-counts">
+      <div class="count-chip chip-feat">
+        <span class="count-num">40</span>
+        <span class="count-lbl">Novos recursos</span>
+      </div>
+      <div class="count-chip chip-fix">
+        <span class="count-num">44</span>
+        <span class="count-lbl">Correções</span>
+      </div>
+      <div class="count-chip chip-perf">
+        <span class="count-num">5</span>
+        <span class="count-lbl">Melhorias</span>
+      </div>
+    </div>
+  </div>
+
   <!-- ════ MAIO 2026 ════ -->
-  <div class="month-block">
+  <div class="month-section">
     <div class="month-header">
-      <span class="month-title">Maio 2026</span>
-      <span class="month-count">15 alterações</span>
+      <span class="month-badge">Maio 2026</span>
+      <span class="month-count">15 atualizações</span>
       <div class="month-line"></div>
     </div>
-    <div class="entries">
 
-      <div class="entry">
-        <span class="entry-date">08/05</span>
-        <div class="entry-body">
-          <span class="entry-text">Adicionando grupo Defensivo Agrícola na emissão de NF-e</span>
-          <div class="entry-tags"><span class="tag tag-fiscal">FISCAL</span><span class="tag tag-new">NOVO</span></div>
-        </div>
-      </div>
+    <div class="card feat">
+      <div class="card-left"><span class="card-date">08/05</span>
+        <span class="card-title">Suporte a Defensivo Agrícola na emissão de nota fiscal</span></div>
+      <div class="tag-row"><span class="tag feat">Novo</span><span class="tag mod">Fiscal</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">08/05</span>
-        <div class="entry-body">
-          <span class="entry-text">Reprocessamento automático de tributação em NFC-es pendentes</span>
-          <div class="entry-tags"><span class="tag tag-fiscal">FISCAL</span><span class="tag tag-new">NOVO</span></div>
-        </div>
-      </div>
+    <div class="card feat">
+      <div class="card-left"><span class="card-date">08/05</span>
+        <span class="card-title">Atualização de impostos em lote nas notas fiscais pendentes</span></div>
+      <div class="tag-row"><span class="tag feat">Novo</span><span class="tag mod">Fiscal</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">08/05</span>
-        <div class="entry-body">
-          <span class="entry-text">Inclusão da situação "fora de prazo" nas validações de NF-e autorizada</span>
-          <div class="entry-tags"><span class="tag tag-fiscal">FISCAL</span><span class="tag tag-new">NOVO</span></div>
-        </div>
-      </div>
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">08/05</span>
+        <span class="card-title">Notas fiscais autorizadas fora do prazo reconhecidas corretamente</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod">Fiscal</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">08/05</span>
-        <div class="entry-body">
-          <span class="entry-text">Correção na importação do PMC de itens na entrada de estoque</span>
-          <div class="entry-tags"><span class="tag tag-farm">FARMÁCIA</span><span class="tag tag-fiscal">FISCAL</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">08/05</span>
+        <span class="card-title">Correção na importação do Preço Máximo ao Consumidor (PMC) nas entradas</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod-farm">Farmácia</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">08/05</span>
-        <div class="entry-body">
-          <span class="entry-text">Corrigido cálculo do custo total no Pedido de Venda</span>
-          <div class="entry-tags"><span class="tag tag-pdv">PDV</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">08/05</span>
+        <span class="card-title">Correção no cálculo do custo total no Pedido de Venda</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod-pdv">Pedido de Venda</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">08/05</span>
-        <div class="entry-body">
-          <span class="entry-text">Corrigida condição do tipo de receituário no SNGPC</span>
-          <div class="entry-tags"><span class="tag tag-farm">FARMÁCIA</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">08/05</span>
+        <span class="card-title">Correção na validação de receituário no SNGPC</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod-farm">Farmácia</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">08/05</span>
-        <div class="entry-body">
-          <span class="entry-text">Corrigida leitura dos tokens do LcPay</span>
-          <div class="entry-tags"><span class="tag tag-tef">TEF</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">08/05</span>
+        <span class="card-title">Correção nas credenciais do LcPay</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod-tef">Pagamentos</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">07/05</span>
-        <div class="entry-body">
-          <span class="entry-text">Novos relatórios SNGPC: listagem de entradas, vendas, transferências, perdas, movimentações, BMPO (capa + detalhes) e inventário completo</span>
-          <div class="entry-tags"><span class="tag tag-farm">FARMÁCIA</span><span class="tag tag-rel">RELATÓRIO</span><span class="tag tag-new">NOVO</span></div>
-        </div>
-      </div>
+    <div class="card feat">
+      <div class="card-left"><span class="card-date">07/05</span>
+        <span class="card-title">Novos relatórios no SNGPC: entradas, vendas, transferências, perdas e inventário completo</span></div>
+      <div class="tag-row"><span class="tag feat">Novo</span><span class="tag mod-farm">Farmácia</span><span class="tag mod-rel">Relatório</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">07/05</span>
-        <div class="entry-body">
-          <span class="entry-text">Relatório de autorização no gerenciador do Farmácia Popular</span>
-          <div class="entry-tags"><span class="tag tag-farm">FARMÁCIA</span><span class="tag tag-rel">RELATÓRIO</span><span class="tag tag-new">NOVO</span></div>
-        </div>
-      </div>
+    <div class="card feat">
+      <div class="card-left"><span class="card-date">07/05</span>
+        <span class="card-title">Novo relatório de autorização no gerenciador do Farmácia Popular</span></div>
+      <div class="tag-row"><span class="tag feat">Novo</span><span class="tag mod-farm">Farmácia</span><span class="tag mod-rel">Relatório</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">07/05</span>
-        <div class="entry-body">
-          <span class="entry-text">Corrigido fuso horário no MDE e melhorada geração do XML para contabilidade</span>
-          <div class="entry-tags"><span class="tag tag-fiscal">FISCAL</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">07/05</span>
+        <span class="card-title">Correção de horário no monitoramento de notas recebidas e melhoria na exportação de XML para contabilidade</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod">Fiscal</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">07/05</span>
-        <div class="entry-body">
-          <span class="entry-text">Normalização de CST/CSOSN na associação de grupos tributários (Imendes)</span>
-          <div class="entry-tags"><span class="tag tag-fiscal">FISCAL</span><span class="tag tag-farm">FARMÁCIA</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">07/05</span>
+        <span class="card-title">Correção na associação de grupos tributários</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod">Fiscal</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">07/05</span>
-        <div class="entry-body">
-          <span class="entry-text">Corrigida validação de quantidade disponível na devolução de itens</span>
-          <div class="entry-tags"><span class="tag tag-fiscal">FISCAL</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">07/05</span>
+        <span class="card-title">Bloqueio de devolução com quantidade acima do permitido</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod">Fiscal</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">06/05</span>
-        <div class="entry-body">
-          <span class="entry-text">Otimização da geração do arquivo XML para contabilidade</span>
-          <div class="entry-tags"><span class="tag tag-fiscal">FISCAL</span><span class="tag tag-sis">SISTEMA</span></div>
-        </div>
-      </div>
+    <div class="card perf">
+      <div class="card-left"><span class="card-date">06/05</span>
+        <span class="card-title">Exportação de XML para contabilidade mais rápida e estável</span></div>
+      <div class="tag-row"><span class="tag perf">Melhoria</span><span class="tag mod">Fiscal</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">06/05</span>
-        <div class="entry-body">
-          <span class="entry-text">Removida cor de seleção personalizada na listagem de vendas no PDV</span>
-          <div class="entry-tags"><span class="tag tag-pdv">PDV</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
+    <div class="card perf">
+      <div class="card-left"><span class="card-date">06/05</span>
+        <span class="card-title">Ajuste visual na listagem de vendas do PDV</span></div>
+      <div class="tag-row"><span class="tag perf">Melhoria</span><span class="tag mod-pdv">PDV</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">04/05</span>
-        <div class="entry-body">
-          <span class="entry-text">Simplificação do GrupoTributacaoEntrada com integração da seleção de GTE diretamente na entrada de notas</span>
-          <div class="entry-tags">
-            <span class="tag tag-fiscal">FISCAL</span>
-            <span class="tag tag-new">NOVO</span>
-          </div>
-        </div>
-      </div>
-
+    <div class="card feat">
+      <div class="card-left"><span class="card-date">04/05</span>
+        <span class="card-title">Seleção automática do grupo tributário correto na entrada de notas</span></div>
+      <div class="tag-row"><span class="tag feat">Novo</span><span class="tag mod">Fiscal</span></div>
     </div>
   </div>
 
   <!-- ════ ABRIL 2026 ════ -->
-  <div class="month-block">
+  <div class="month-section">
     <div class="month-header">
-      <span class="month-title">Abril 2026</span>
-      <span class="month-count">22 alterações</span>
+      <span class="month-badge">Abril 2026</span>
+      <span class="month-count">23 atualizações</span>
       <div class="month-line"></div>
     </div>
-    <div class="entries">
 
-      <div class="entry">
-        <span class="entry-date">30/04</span>
-        <div class="entry-body">
-          <span class="entry-text">Edição controlada de juros e multa nos módulos financeiros (Receber e Pagar)</span>
-          <div class="entry-tags"><span class="tag tag-fin">FINANCEIRO</span><span class="tag tag-new">NOVO</span></div>
-        </div>
-      </div>
+    <div class="card feat">
+      <div class="card-left"><span class="card-date">30/04</span>
+        <span class="card-title">Edição de juros e multa no Contas a Receber e no Contas a Pagar</span></div>
+      <div class="tag-row"><span class="tag feat">Novo</span><span class="tag mod-fin">Financeiro</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">29/04</span>
-        <div class="entry-body">
-          <span class="entry-text">Corrigida perda de desconto e financeiros ao editar vencimento no Receber e Pagar</span>
-          <div class="entry-tags"><span class="tag tag-fin">FINANCEIRO</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">29/04</span>
+        <span class="card-title">Correção: desconto não era perdido ao editar o vencimento de um título</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod-fin">Financeiro</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">29/04</span>
-        <div class="entry-body">
-          <span class="entry-text">Corrigida proporcionalidade do rateio de desconto nos módulos financeiros</span>
-          <div class="entry-tags"><span class="tag tag-fin">FINANCEIRO</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">29/04</span>
+        <span class="card-title">Correção no rateio proporcional de desconto entre parcelas</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod-fin">Financeiro</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">29/04</span>
-        <div class="entry-body">
-          <span class="entry-text">Corrigida ordem de abatimento e cálculo de juros no financeiro; correção de id_empresa na listagem sintética do Pagar</span>
-          <div class="entry-tags"><span class="tag tag-fin">FINANCEIRO</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">29/04</span>
+        <span class="card-title">Correções no cálculo de juros e na listagem do Contas a Pagar</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod-fin">Financeiro</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">28/04</span>
-        <div class="entry-body">
-          <span class="entry-text">Refatoração do rateio proporcional e melhorias nos módulos Receber, Pagar e Recebimento PDV — cálculos de desconto e valor restante corrigidos</span>
-          <div class="entry-tags"><span class="tag tag-fin">FINANCEIRO</span><span class="tag tag-pdv">PDV</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">28/04</span>
+        <span class="card-title">Melhorias nos cálculos de desconto e valor restante no financeiro e no recebimento do PDV</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod-fin">Financeiro</span><span class="tag mod-pdv">PDV</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">20/04</span>
-        <div class="entry-body">
-          <span class="entry-text">Correções de integridade e melhorias no Contas a Pagar</span>
-          <div class="entry-tags"><span class="tag tag-fin">FINANCEIRO</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">20/04</span>
+        <span class="card-title">Correções de consistência no Contas a Pagar</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod-fin">Financeiro</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">16/04</span>
-        <div class="entry-body">
-          <span class="entry-text">Atualização dos certificados NFeCacerts</span>
-          <div class="entry-tags"><span class="tag tag-fiscal">FISCAL</span><span class="tag tag-sis">SISTEMA</span></div>
-        </div>
-      </div>
+    <div class="card perf">
+      <div class="card-left"><span class="card-date">16/04</span>
+        <span class="card-title">Atualização dos certificados digitais utilizados na emissão de notas fiscais</span></div>
+      <div class="tag-row"><span class="tag perf">Melhoria</span><span class="tag mod">Fiscal</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">16/04</span>
-        <div class="entry-body">
-          <span class="entry-text">Edição manual do editor de CFOP na entrada + correção na associação</span>
-          <div class="entry-tags"><span class="tag tag-fiscal">FISCAL</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">16/04</span>
+        <span class="card-title">Correção na edição manual do código de operação fiscal (CFOP) nas entradas</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod">Fiscal</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">13/04</span>
-        <div class="entry-body">
-          <span class="entry-text">Parâmetro para controlar impressão do número do item na NFC-e</span>
-          <div class="entry-tags"><span class="tag tag-fiscal">FISCAL</span><span class="tag tag-new">NOVO</span></div>
-        </div>
-      </div>
+    <div class="card feat">
+      <div class="card-left"><span class="card-date">13/04</span>
+        <span class="card-title">Novo parâmetro para ocultar ou exibir o número do item no cupom fiscal (NFC-e)</span></div>
+      <div class="tag-row"><span class="tag feat">Novo</span><span class="tag mod">Fiscal</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">13/04</span>
-        <div class="entry-body">
-          <span class="entry-text">Suporte a fornecedor estrangeiro na importação de NF-e e no cadastro</span>
-          <div class="entry-tags"><span class="tag tag-fiscal">FISCAL</span><span class="tag tag-new">NOVO</span></div>
-        </div>
-      </div>
+    <div class="card feat">
+      <div class="card-left"><span class="card-date">13/04</span>
+        <span class="card-title">Suporte a fornecedor estrangeiro no cadastro e na importação de nota fiscal</span></div>
+      <div class="tag-row"><span class="tag feat">Novo</span><span class="tag mod">Fiscal</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">13/04</span>
-        <div class="entry-body">
-          <span class="entry-text">Implementação da tag infAdFisco na NFC-e conforme IN RFB 2.305/2025</span>
-          <div class="entry-tags"><span class="tag tag-fiscal">FISCAL</span><span class="tag tag-new">NOVO</span></div>
-        </div>
-      </div>
+    <div class="card feat">
+      <div class="card-left"><span class="card-date">13/04</span>
+        <span class="card-title">NFC-e atualizada conforme nova legislação fiscal (IN RFB 2.305/2025)</span></div>
+      <div class="tag-row"><span class="tag feat">Novo</span><span class="tag mod">Fiscal</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">13/04</span>
-        <div class="entry-body">
-          <span class="entry-text">Corrigido cálculo de encargos e pesquisa no Pagar e no Receber</span>
-          <div class="entry-tags"><span class="tag tag-fin">FINANCEIRO</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">13/04</span>
+        <span class="card-title">Correção no cálculo de juros e multa no Contas a Pagar e Receber</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod-fin">Financeiro</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">09/04</span>
-        <div class="entry-body">
-          <span class="entry-text">Corrigido relatório de comissão por usuários</span>
-          <div class="entry-tags"><span class="tag tag-rel">RELATÓRIO</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">09/04</span>
+        <span class="card-title">Correção no relatório de comissão por vendedor</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod-rel">Relatório</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">08/04</span>
-        <div class="entry-body">
-          <span class="entry-text">Reestruturação do fluxo de importação de XMLs</span>
-          <div class="entry-tags"><span class="tag tag-fiscal">FISCAL</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
+    <div class="card perf">
+      <div class="card-left"><span class="card-date">08/04</span>
+        <span class="card-title">Melhoria no processo de importação de notas fiscais via XML</span></div>
+      <div class="tag-row"><span class="tag perf">Melhoria</span><span class="tag mod">Fiscal</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">08/04</span>
-        <div class="entry-body">
-          <span class="entry-text">Correção de duplicidade no relatório fiscal de entradas; correção no fluxo de captura OS → PDV</span>
-          <div class="entry-tags"><span class="tag tag-rel">RELATÓRIO</span><span class="tag tag-pdv">PDV</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">08/04</span>
+        <span class="card-title">Correção de duplicidade no relatório de entradas e no fluxo de Ordem de Serviço para o PDV</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod-rel">Relatório</span><span class="tag mod-pdv">PDV</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">08/04</span>
-        <div class="entry-body">
-          <span class="entry-text">Adicionados campos de encargos (Juros + Multa) no financeiro; correções no movimento de caixa e conferência cega</span>
-          <div class="entry-tags"><span class="tag tag-fin">FINANCEIRO</span><span class="tag tag-new">NOVO</span></div>
-        </div>
-      </div>
+    <div class="card feat">
+      <div class="card-left"><span class="card-date">08/04</span>
+        <span class="card-title">Campos de juros e multa no financeiro; melhorias no movimento de caixa</span></div>
+      <div class="tag-row"><span class="tag feat">Novo</span><span class="tag mod-fin">Financeiro</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">07/04</span>
-        <div class="entry-body">
-          <span class="entry-text">Impressão de produtos pendentes no módulo Imendes</span>
-          <div class="entry-tags"><span class="tag tag-farm">FARMÁCIA</span><span class="tag tag-new">NOVO</span></div>
-        </div>
-      </div>
+    <div class="card feat">
+      <div class="card-left"><span class="card-date">07/04</span>
+        <span class="card-title">Impressão da lista de produtos pendentes no Imendes</span></div>
+      <div class="tag-row"><span class="tag feat">Novo</span><span class="tag mod-farm">Farmácia</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">06/04</span>
-        <div class="entry-body">
-          <span class="entry-text">Corrigido saneamento de pendentes com verificação de nulidade no Imendes (atualização da lib LC_IMENDES)</span>
-          <div class="entry-tags"><span class="tag tag-farm">FARMÁCIA</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">06/04</span>
+        <span class="card-title">Correção no processamento de produtos pendentes do Imendes</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod-farm">Farmácia</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">06/04</span>
-        <div class="entry-body">
-          <span class="entry-text">Implementação da conferência cega de fechamento de caixa</span>
-          <div class="entry-tags"><span class="tag tag-fin">FINANCEIRO</span><span class="tag tag-new">NOVO</span></div>
-        </div>
-      </div>
+    <div class="card feat">
+      <div class="card-left"><span class="card-date">06/04</span>
+        <span class="card-title">Conferência cega no fechamento de caixa</span></div>
+      <div class="tag-row"><span class="tag feat">Novo</span><span class="tag mod-fin">Financeiro</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">06/04</span>
-        <div class="entry-body">
-          <span class="entry-text">Correção do cálculo de custo médio; correção de troca de preço entre entradas do mesmo produto no Gourmet</span>
-          <div class="entry-tags"><span class="tag tag-est">ESTOQUE</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">06/04</span>
+        <span class="card-title">Correção no cálculo de custo médio e na atualização de preços por entrada</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod-est">Estoque</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">06/04</span>
-        <div class="entry-body">
-          <span class="entry-text">Correção de relatórios de vendas analítico; adição de coluna de encargos e cálculo de juros no Receber e Pagar</span>
-          <div class="entry-tags"><span class="tag tag-rel">RELATÓRIO</span><span class="tag tag-fin">FINANCEIRO</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">06/04</span>
+        <span class="card-title">Correção no relatório de vendas analítico; adição de coluna de encargos no Contas a Receber e Pagar</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod-rel">Relatório</span><span class="tag mod-fin">Financeiro</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">06/04</span>
-        <div class="entry-body">
-          <span class="entry-text">Botão de duplicar transferência entre empresas</span>
-          <div class="entry-tags"><span class="tag tag-fin">FINANCEIRO</span><span class="tag tag-new">NOVO</span></div>
-        </div>
-      </div>
+    <div class="card feat">
+      <div class="card-left"><span class="card-date">06/04</span>
+        <span class="card-title">Botão para duplicar transferência entre empresas</span></div>
+      <div class="tag-row"><span class="tag feat">Novo</span><span class="tag mod-fin">Financeiro</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">01/04</span>
-        <div class="entry-body">
-          <span class="entry-text">Inclusão de notas autorizadas fora de prazo nos relatórios; correção no registro do histórico de preços na atualização em massa</span>
-          <div class="entry-tags"><span class="tag tag-rel">RELATÓRIO</span><span class="tag tag-est">ESTOQUE</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
-
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">01/04</span>
+        <span class="card-title">Notas autorizadas fora do prazo incluídas nos relatórios; correção no histórico de preços na atualização em massa</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod-rel">Relatório</span><span class="tag mod-est">Estoque</span></div>
     </div>
   </div>
 
   <!-- ════ MARÇO 2026 ════ -->
-  <div class="month-block">
+  <div class="month-section">
     <div class="month-header">
-      <span class="month-title">Março 2026</span>
-      <span class="month-count">34 alterações</span>
+      <span class="month-badge">Março 2026</span>
+      <span class="month-count">37 atualizações</span>
       <div class="month-line"></div>
     </div>
-    <div class="entries">
 
-      <div class="entry">
-        <span class="entry-date">30/03</span>
-        <div class="entry-body">
-          <span class="entry-text">Correção de arredondamento em campos que salvavam com 3 casas decimais</span>
-          <div class="entry-tags"><span class="tag tag-sis">SISTEMA</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">30/03</span>
+        <span class="card-title">Correção de arredondamento em valores numéricos salvos no sistema</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod-sis">Sistema</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">27/03</span>
-        <div class="entry-body">
-          <span class="entry-text">Implementação do PMC nas impressões e escolha do código para cPROD na NF-e</span>
-          <div class="entry-tags"><span class="tag tag-fiscal">FISCAL</span><span class="tag tag-farm">FARMÁCIA</span><span class="tag tag-new">NOVO</span></div>
-        </div>
-      </div>
+    <div class="card feat">
+      <div class="card-left"><span class="card-date">27/03</span>
+        <span class="card-title">Preço Máximo ao Consumidor (PMC) exibido nas impressões e nas notas fiscais</span></div>
+      <div class="tag-row"><span class="tag feat">Novo</span><span class="tag mod">Fiscal</span><span class="tag mod-farm">Farmácia</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">27/03</span>
-        <div class="entry-body">
-          <span class="entry-text">Inclusão do fluxo de devolução via captura de entradas no módulo de saídas</span>
-          <div class="entry-tags"><span class="tag tag-fiscal">FISCAL</span><span class="tag tag-new">NOVO</span></div>
-        </div>
-      </div>
+    <div class="card feat">
+      <div class="card-left"><span class="card-date">27/03</span>
+        <span class="card-title">Devolução de mercadoria diretamente pelo módulo de saídas</span></div>
+      <div class="tag-row"><span class="tag feat">Novo</span><span class="tag mod">Fiscal</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">27/03</span>
-        <div class="entry-body">
-          <span class="entry-text">Tela de autorização para aplicação de desconto por item</span>
-          <div class="entry-tags"><span class="tag tag-pdv">PDV</span><span class="tag tag-new">NOVO</span></div>
-        </div>
-      </div>
+    <div class="card feat">
+      <div class="card-left"><span class="card-date">27/03</span>
+        <span class="card-title">Tela de autorização para aplicação de desconto por item</span></div>
+      <div class="tag-row"><span class="tag feat">Novo</span><span class="tag mod-pdv">PDV</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">27/03</span>
-        <div class="entry-body">
-          <span class="entry-text">Pagamento parcial em Contas a Pagar</span>
-          <div class="entry-tags"><span class="tag tag-fin">FINANCEIRO</span><span class="tag tag-new">NOVO</span></div>
-        </div>
-      </div>
+    <div class="card feat">
+      <div class="card-left"><span class="card-date">27/03</span>
+        <span class="card-title">Pagamento parcial no Contas a Pagar</span></div>
+      <div class="tag-row"><span class="tag feat">Novo</span><span class="tag mod-fin">Financeiro</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">27/03</span>
-        <div class="entry-body">
-          <span class="entry-text">Controle de saneamento Imendes por produto</span>
-          <div class="entry-tags"><span class="tag tag-farm">FARMÁCIA</span><span class="tag tag-new">NOVO</span></div>
-        </div>
-      </div>
+    <div class="card feat">
+      <div class="card-left"><span class="card-date">27/03</span>
+        <span class="card-title">Controle de saneamento de produtos Imendes por produto</span></div>
+      <div class="tag-row"><span class="tag feat">Novo</span><span class="tag mod-farm">Farmácia</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">27/03</span>
-        <div class="entry-body">
-          <span class="entry-text">Preço de promoção adicionado na tela de atualização de preço</span>
-          <div class="entry-tags"><span class="tag tag-est">ESTOQUE</span><span class="tag tag-new">NOVO</span></div>
-        </div>
-      </div>
+    <div class="card feat">
+      <div class="card-left"><span class="card-date">27/03</span>
+        <span class="card-title">Preço de promoção disponível na tela de atualização de preços</span></div>
+      <div class="tag-row"><span class="tag feat">Novo</span><span class="tag mod-est">Estoque</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">27/03</span>
-        <div class="entry-body">
-          <span class="entry-text">Valor de pedágio incluído nas informações complementares do MDF-e</span>
-          <div class="entry-tags"><span class="tag tag-fiscal">FISCAL</span><span class="tag tag-new">NOVO</span></div>
-        </div>
-      </div>
+    <div class="card feat">
+      <div class="card-left"><span class="card-date">27/03</span>
+        <span class="card-title">Campo de valor de pedágio nas informações do manifesto de transporte (MDF-e)</span></div>
+      <div class="tag-row"><span class="tag feat">Novo</span><span class="tag mod">Fiscal</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">27/03</span>
-        <div class="entry-body">
-          <span class="entry-text">Filtro de pesquisa do Pedido de Venda; nova validação na entrada para margens negativas</span>
-          <div class="entry-tags"><span class="tag tag-pdv">PDV</span><span class="tag tag-fiscal">FISCAL</span><span class="tag tag-new">NOVO</span></div>
-        </div>
-      </div>
+    <div class="card feat">
+      <div class="card-left"><span class="card-date">27/03</span>
+        <span class="card-title">Filtro de pesquisa no Pedido de Venda; aviso de margem negativa nas entradas</span></div>
+      <div class="tag-row"><span class="tag feat">Novo</span><span class="tag mod-pdv">PDV</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">27/03</span>
-        <div class="entry-body">
-          <span class="entry-text">Correção: venda de item fracionado e unitário usando código/preço corretos; correções nos arquivos de retorno de boletos</span>
-          <div class="entry-tags"><span class="tag tag-pdv">PDV</span><span class="tag tag-fin">FINANCEIRO</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">27/03</span>
+        <span class="card-title">Correção na venda de itens fracionados e unitários usando código e preço corretos; correções nos arquivos de retorno de boletos</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod-pdv">PDV</span><span class="tag mod-fin">Financeiro</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">27/03</span>
-        <div class="entry-body">
-          <span class="entry-text">Correção da exibição de estornos no relatório de caixas</span>
-          <div class="entry-tags"><span class="tag tag-rel">RELATÓRIO</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">27/03</span>
+        <span class="card-title">Correção na exibição de estornos no relatório de caixas</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod-rel">Relatório</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">25/03</span>
-        <div class="entry-body">
-          <span class="entry-text">Ajustes na tela do MDF-e — pagamento do frete</span>
-          <div class="entry-tags"><span class="tag tag-fiscal">FISCAL</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">25/03</span>
+        <span class="card-title">Ajustes no registro de pagamento do frete no manifesto de transporte (MDF-e)</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod">Fiscal</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">24/03</span>
-        <div class="entry-body">
-          <span class="entry-text">Correções e tratamentos ABCPharma e Pharmacos; correções no SNGPC</span>
-          <div class="entry-tags"><span class="tag tag-farm">FARMÁCIA</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">24/03</span>
+        <span class="card-title">Correções nas integrações ABCPharma e Pharmacos; correções no SNGPC</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod-farm">Farmácia</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">23/03</span>
-        <div class="entry-body">
-          <span class="entry-text">Correção Gourmet — tela de validação de controle; ajuste no pré-DANFE coluna valor total do item</span>
-          <div class="entry-tags"><span class="tag tag-fiscal">FISCAL</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">23/03</span>
+        <span class="card-title">Correção no valor total do item no pré-visualizador de nota fiscal</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod">Fiscal</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">23/03</span>
-        <div class="entry-body">
-          <span class="entry-text">Permissão de controle para aplicação de acréscimo; correção na data de exibição no controle de caixa</span>
-          <div class="entry-tags"><span class="tag tag-fin">FINANCEIRO</span><span class="tag tag-new">NOVO</span></div>
-        </div>
-      </div>
+    <div class="card feat">
+      <div class="card-left"><span class="card-date">23/03</span>
+        <span class="card-title">Novo controle de permissão para aplicação de acréscimo; correção na data exibida no controle de caixa</span></div>
+      <div class="tag-row"><span class="tag feat">Novo</span><span class="tag mod-fin">Financeiro</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">20/03</span>
-        <div class="entry-body">
-          <span class="entry-text">Controle de gorjeta aplicando corretamente</span>
-          <div class="entry-tags"><span class="tag tag-pdv">PDV</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">20/03</span>
+        <span class="card-title">Correção no controle de gorjeta no PDV</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod-pdv">PDV</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">20/03</span>
-        <div class="entry-body">
-          <span class="entry-text">Bloqueio de acesso à tela PDV Mercado (em desenvolvimento) via menu principal</span>
-          <div class="entry-tags"><span class="tag tag-pdv">PDV</span><span class="tag tag-sis">SISTEMA</span></div>
-        </div>
-      </div>
+    <div class="card perf">
+      <div class="card-left"><span class="card-date">20/03</span>
+        <span class="card-title">Atualização da tabela de cidades cadastradas no sistema</span></div>
+      <div class="tag-row"><span class="tag perf">Melhoria</span><span class="tag mod-sis">Sistema</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">20/03</span>
-        <div class="entry-body">
-          <span class="entry-text">Atualização da tabela de cidades padrão</span>
-          <div class="entry-tags"><span class="tag tag-sis">SISTEMA</span></div>
-        </div>
-      </div>
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">20/03</span>
+        <span class="card-title">Correção no controle de carta de crédito; ajuste no estoque com valor negativo</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod-fin">Financeiro</span><span class="tag mod-est">Estoque</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">20/03</span>
-        <div class="entry-body">
-          <span class="entry-text">Reajuste no controle de carta de crédito; ajuste de inserção de estoques com valor menor que zero</span>
-          <div class="entry-tags"><span class="tag tag-fin">FINANCEIRO</span><span class="tag tag-est">ESTOQUE</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">20/03</span>
+        <span class="card-title">Campos tributários bloqueados após importação de XML para evitar alterações incorretas</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod">Fiscal</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">20/03</span>
-        <div class="entry-body">
-          <span class="entry-text">Bloqueio dos parâmetros após importação de XML na entrada</span>
-          <div class="entry-tags"><span class="tag tag-fiscal">FISCAL</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
+    <div class="card feat">
+      <div class="card-left"><span class="card-date">20/03</span>
+        <span class="card-title">Novo relatório de extrato de itens no recebimento do PDV</span></div>
+      <div class="tag-row"><span class="tag feat">Novo</span><span class="tag mod-rel">Relatório</span><span class="tag mod-pdv">PDV</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">20/03</span>
-        <div class="entry-body">
-          <span class="entry-text">Novo relatório de extrato de itens no recebimento PDV</span>
-          <div class="entry-tags"><span class="tag tag-rel">RELATÓRIO</span><span class="tag tag-pdv">PDV</span><span class="tag tag-new">NOVO</span></div>
-        </div>
-      </div>
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">20/03</span>
+        <span class="card-title">Correção no filtro de parcelas ativas no plano de pagamento</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod-fin">Financeiro</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">20/03</span>
-        <div class="entry-body">
-          <span class="entry-text">Atualização do filtro do plano de pagamento (parcelas ativas); correção ao inativar parcela</span>
-          <div class="entry-tags"><span class="tag tag-fin">FINANCEIRO</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">20/03</span>
+        <span class="card-title">Correção no recebimento com controle de caixa; relatório de Estoque Crítico corrigido</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod-fin">Financeiro</span><span class="tag mod-rel">Relatório</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">20/03</span>
-        <div class="entry-body">
-          <span class="entry-text">Correção no recebimento com controle de caixa; relatório de Estoque Crítico corrigido</span>
-          <div class="entry-tags"><span class="tag tag-fin">FINANCEIRO</span><span class="tag tag-rel">RELATÓRIO</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">20/03</span>
+        <span class="card-title">Correção no motivo de desoneração exibido na nota fiscal impressa</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod">Fiscal</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">20/03</span>
-        <div class="entry-body">
-          <span class="entry-text">Motivo de desoneração ausente no DANFE corrigido</span>
-          <div class="entry-tags"><span class="tag tag-fiscal">FISCAL</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">20/03</span>
+        <span class="card-title">Itens cancelados não aparecem mais no cupom da venda gerencial; correções no Balcão</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod-balcao">Balcão</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">20/03</span>
-        <div class="entry-body">
-          <span class="entry-text">Ajustes no módulo Balcão e correção de convênio; itens cancelados não aparecem mais no cupom da venda gerencial</span>
-          <div class="entry-tags"><span class="tag tag-balcao">BALCÃO</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
+    <div class="card feat">
+      <div class="card-left"><span class="card-date">20/03</span>
+        <span class="card-title">Cadastro de cliente aceita número de telefone estrangeiro</span></div>
+      <div class="tag-row"><span class="tag feat">Novo</span><span class="tag mod-sis">Sistema</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">20/03</span>
-        <div class="entry-body">
-          <span class="entry-text">Cadastro de cliente aceita número de telefone estrangeiro</span>
-          <div class="entry-tags"><span class="tag tag-sis">SISTEMA</span><span class="tag tag-new">NOVO</span></div>
-        </div>
-      </div>
+    <div class="card feat">
+      <div class="card-left"><span class="card-date">20/03</span>
+        <span class="card-title">Aviso ao cadastrar preço de custo maior que o preço de venda</span></div>
+      <div class="tag-row"><span class="tag feat">Novo</span><span class="tag mod-est">Estoque</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">20/03</span>
-        <div class="entry-body">
-          <span class="entry-text">Notificação ao cadastrar preço de custo maior que preço de venda</span>
-          <div class="entry-tags"><span class="tag tag-est">ESTOQUE</span><span class="tag tag-new">NOVO</span></div>
-        </div>
-      </div>
+    <div class="card feat">
+      <div class="card-left"><span class="card-date">20/03</span>
+        <span class="card-title">Configuração do número de vias do orçamento no Balcão; filtro para ocultar cliente final no faturamento</span></div>
+      <div class="tag-row"><span class="tag feat">Novo</span><span class="tag mod-balcao">Balcão</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">20/03</span>
-        <div class="entry-body">
-          <span class="entry-text">Parâmetro para escolha do número de vias do orçamento no Balcão; filtro para ocultar cliente final no faturamento</span>
-          <div class="entry-tags"><span class="tag tag-balcao">BALCÃO</span><span class="tag tag-new">NOVO</span></div>
-        </div>
-      </div>
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">20/03</span>
+        <span class="card-title">Correção no fluxo de pagamento eletrônico (TEF)</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod-tef">Pagamentos</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">20/03</span>
-        <div class="entry-body">
-          <span class="entry-text">Correção de fluxo TEF</span>
-          <div class="entry-tags"><span class="tag tag-tef">TEF</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">18/03</span>
+        <span class="card-title">Correção no relatório de vendas comparativo; ajustes no controle de caixa</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod-rel">Relatório</span><span class="tag mod-fin">Financeiro</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">18/03</span>
-        <div class="entry-body">
-          <span class="entry-text">Correção no relatório de vendas comparativo sintético; reajuste financeiro e controle de caixa</span>
-          <div class="entry-tags"><span class="tag tag-rel">RELATÓRIO</span><span class="tag tag-fin">FINANCEIRO</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
+    <div class="card feat">
+      <div class="card-left"><span class="card-date">16/03</span>
+        <span class="card-title">Endereço de entrega nas impressões do Balcão, PDV e PDV Fiscal</span></div>
+      <div class="tag-row"><span class="tag feat">Novo</span><span class="tag mod-pdv">PDV</span><span class="tag mod-balcao">Balcão</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">16/03</span>
-        <div class="entry-body">
-          <span class="entry-text">Implementação de localização nas impressões do Balcão, PDV e PDV Fiscal</span>
-          <div class="entry-tags"><span class="tag tag-pdv">PDV</span><span class="tag tag-balcao">BALCÃO</span><span class="tag tag-new">NOVO</span></div>
-        </div>
-      </div>
+    <div class="card feat">
+      <div class="card-left"><span class="card-date">13/03</span>
+        <span class="card-title">Novos filtros no relatório de vendas comparativo</span></div>
+      <div class="tag-row"><span class="tag feat">Novo</span><span class="tag mod-rel">Relatório</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">13/03</span>
-        <div class="entry-body">
-          <span class="entry-text">Melhorias nos relatórios de vendas comparativo com novos filtros</span>
-          <div class="entry-tags"><span class="tag tag-rel">RELATÓRIO</span><span class="tag tag-new">NOVO</span></div>
-        </div>
-      </div>
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">12/03</span>
+        <span class="card-title">Correção na emissão de NFC-e em contingência; atualização dos relatórios de listagem de entradas</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod">Fiscal</span><span class="tag mod-rel">Relatório</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">12/03</span>
-        <div class="entry-body">
-          <span class="entry-text">Correção de emissão em contingência no PDV NFC-e; atualização dos relatórios de listagem de entradas</span>
-          <div class="entry-tags"><span class="tag tag-fiscal">FISCAL</span><span class="tag tag-rel">RELATÓRIO</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
+    <div class="card feat">
+      <div class="card-left"><span class="card-date">12/03</span>
+        <span class="card-title">Importação manual de XMLs de notas fiscais</span></div>
+      <div class="tag-row"><span class="tag feat">Novo</span><span class="tag mod">Fiscal</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">12/03</span>
-        <div class="entry-body">
-          <span class="entry-text">Entrada de XMLs manuais salva + refatoração da captura de XML</span>
-          <div class="entry-tags"><span class="tag tag-fiscal">FISCAL</span><span class="tag tag-new">NOVO</span></div>
-        </div>
-      </div>
+    <div class="card feat">
+      <div class="card-left"><span class="card-date">09/03</span>
+        <span class="card-title">Observações no PDV com quebra de linha; informação adicional do item nas notas fiscais</span></div>
+      <div class="tag-row"><span class="tag feat">Novo</span><span class="tag mod-pdv">PDV</span><span class="tag mod">Fiscal</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">09/03</span>
-        <div class="entry-body">
-          <span class="entry-text">Obs no PDV permitem quebra de linha; busca no retaguarda pelo id do Balcão; informação adicional do item em documentos fiscais</span>
-          <div class="entry-tags"><span class="tag tag-pdv">PDV</span><span class="tag tag-fiscal">FISCAL</span><span class="tag tag-new">NOVO</span></div>
-        </div>
-      </div>
+    <div class="card feat">
+      <div class="card-left"><span class="card-date">09/03</span>
+        <span class="card-title">Novo parâmetro tributário para desoneração de ICMS na base de PIS/COFINS; validação na quantidade de etiquetas</span></div>
+      <div class="tag-row"><span class="tag feat">Novo</span><span class="tag mod">Fiscal</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">09/03</span>
-        <div class="entry-body">
-          <span class="entry-text">Parâmetro: ICMS desoneração excluído da base de PIS/COFINS; validação na quantidade de etiquetas</span>
-          <div class="entry-tags"><span class="tag tag-fiscal">FISCAL</span><span class="tag tag-new">NOVO</span></div>
-        </div>
-      </div>
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">06/03</span>
+        <span class="card-title">Melhoria na visualização de títulos no Contas a Pagar e Receber</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod-fin">Financeiro</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">06/03</span>
-        <div class="entry-body">
-          <span class="entry-text">Ajuste na visualização dos títulos no Contas a Pagar/Receber</span>
-          <div class="entry-tags"><span class="tag tag-fin">FINANCEIRO</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
-
-      <div class="entry">
-        <span class="entry-date">05/03</span>
-        <div class="entry-body">
-          <span class="entry-text">Validação do vendedor no cadastro de cliente; campo nome adicionado no inventário de estoque</span>
-          <div class="entry-tags"><span class="tag tag-est">ESTOQUE</span><span class="tag tag-new">NOVO</span></div>
-        </div>
-      </div>
-
+    <div class="card feat">
+      <div class="card-left"><span class="card-date">05/03</span>
+        <span class="card-title">Campo de nome no inventário de estoque; validação de vendedor no cadastro de cliente</span></div>
+      <div class="tag-row"><span class="tag feat">Novo</span><span class="tag mod-est">Estoque</span></div>
     </div>
   </div>
 
   <!-- ════ FEVEREIRO 2026 ════ -->
-  <div class="month-block">
+  <div class="month-section">
     <div class="month-header">
-      <span class="month-title">Fevereiro 2026</span>
-      <span class="month-count">6 alterações</span>
+      <span class="month-badge">Fevereiro 2026</span>
+      <span class="month-count">6 atualizações</span>
       <div class="month-line"></div>
     </div>
-    <div class="entries">
 
-      <div class="entry">
-        <span class="entry-date">27/02</span>
-        <div class="entry-body">
-          <span class="entry-text">Correção geral no módulo financeiro</span>
-          <div class="entry-tags"><span class="tag tag-fin">FINANCEIRO</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">27/02</span>
+        <span class="card-title">Correções gerais no módulo financeiro</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod-fin">Financeiro</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">11/02</span>
-        <div class="entry-body">
-          <span class="entry-text">Reformulação completa do crediário</span>
-          <div class="entry-tags"><span class="tag tag-fin">FINANCEIRO</span><span class="tag tag-new">NOVO</span></div>
-        </div>
-      </div>
+    <div class="card feat">
+      <div class="card-left"><span class="card-date">11/02</span>
+        <span class="card-title">Reformulação completa do crediário</span></div>
+      <div class="tag-row"><span class="tag feat">Novo</span><span class="tag mod-fin">Financeiro</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">11/02</span>
-        <div class="entry-body">
-          <span class="entry-text">Relatório de extrato de produtos vendidos com exportação em PDF</span>
-          <div class="entry-tags"><span class="tag tag-rel">RELATÓRIO</span><span class="tag tag-new">NOVO</span></div>
-        </div>
-      </div>
+    <div class="card feat">
+      <div class="card-left"><span class="card-date">11/02</span>
+        <span class="card-title">Relatório de extrato de produtos vendidos com exportação em PDF</span></div>
+      <div class="tag-row"><span class="tag feat">Novo</span><span class="tag mod-rel">Relatório</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">11/02</span>
-        <div class="entry-body">
-          <span class="entry-text">Ajustes nas regras tributárias (CST/ST/FCP) e reforço de validações</span>
-          <div class="entry-tags"><span class="tag tag-fiscal">FISCAL</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">11/02</span>
+        <span class="card-title">Melhorias e correções nas regras tributárias</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod">Fiscal</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">11/02</span>
-        <div class="entry-body">
-          <span class="entry-text">Correções de validações, fluxos de telas e impressão; aprimoramento de filtros no banco</span>
-          <div class="entry-tags"><span class="tag tag-sis">SISTEMA</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">11/02</span>
+        <span class="card-title">Correções em validações, fluxos de telas e impressões do sistema</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod-sis">Sistema</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">11/02</span>
-        <div class="entry-body">
-          <span class="entry-text">Refatoração na obtenção do cliente final e correções de lógica de preço</span>
-          <div class="entry-tags"><span class="tag tag-pdv">PDV</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
-
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">11/02</span>
+        <span class="card-title">Correções na identificação do cliente e na lógica de aplicação de preços</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod-pdv">PDV</span></div>
     </div>
   </div>
 
   <!-- ════ JANEIRO 2026 ════ -->
-  <div class="month-block">
+  <div class="month-section">
     <div class="month-header">
-      <span class="month-title">Janeiro 2026</span>
-      <span class="month-count">7 alterações</span>
+      <span class="month-badge">Janeiro 2026</span>
+      <span class="month-count">4 atualizações</span>
       <div class="month-line"></div>
     </div>
-    <div class="entries">
 
-      <div class="entry">
-        <span class="entry-date">18–21/01</span>
-        <div class="entry-body">
-          <span class="entry-text">PDV Mercado — início do desenvolvimento (6 iterações): nova tela voltada para supermercados, parâmetros de configuração e melhorias no PDV padrão</span>
-          <div class="entry-tags"><span class="tag tag-pdv">PDV</span><span class="tag tag-new">NOVO</span></div>
-        </div>
-      </div>
+    <div class="card feat">
+      <div class="card-left"><span class="card-date">18–21/01</span>
+        <span class="card-title">PDV Mercado: nova tela voltada para supermercados (em desenvolvimento) com parâmetros de configuração</span></div>
+      <div class="tag-row"><span class="tag feat">Novo</span><span class="tag mod-pdv">PDV</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">19/01</span>
-        <div class="entry-body">
-          <span class="entry-text">Ajuste da lógica de aplicação de preços no Balcão</span>
-          <div class="entry-tags"><span class="tag tag-balcao">BALCÃO</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">19/01</span>
+        <span class="card-title">Correção na aplicação de preços no Balcão</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod-balcao">Balcão</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">19/01</span>
-        <div class="entry-body">
-          <span class="entry-text">Novo parâmetro IPI no Imendes; refatoração da API fiscal NFC-e; melhorias na emissão online/contingência NFC-e</span>
-          <div class="entry-tags"><span class="tag tag-fiscal">FISCAL</span><span class="tag tag-farm">FARMÁCIA</span><span class="tag tag-new">NOVO</span></div>
-        </div>
-      </div>
+    <div class="card feat">
+      <div class="card-left"><span class="card-date">19/01</span>
+        <span class="card-title">Melhorias na emissão de NFC-e online e em contingência; novo parâmetro IPI no Imendes</span></div>
+      <div class="tag-row"><span class="tag feat">Novo</span><span class="tag mod">Fiscal</span><span class="tag mod-farm">Farmácia</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">19/01</span>
-        <div class="entry-body">
-          <span class="entry-text">Integração Shipay — suporte a 2 formas de pagamento com a integração</span>
-          <div class="entry-tags"><span class="tag tag-tef">TEF</span><span class="tag tag-new">NOVO</span></div>
-        </div>
-      </div>
-
+    <div class="card feat">
+      <div class="card-left"><span class="card-date">19/01</span>
+        <span class="card-title">Integração Shipay com suporte a duas formas de pagamento simultâneas</span></div>
+      <div class="tag-row"><span class="tag feat">Novo</span><span class="tag mod-tef">Pagamentos</span></div>
     </div>
   </div>
 
   <!-- ════ DEZEMBRO 2025 ════ -->
-  <div class="month-block">
+  <div class="month-section">
     <div class="month-header">
-      <span class="month-title">Dezembro 2025</span>
-      <span class="month-count">4 alterações</span>
+      <span class="month-badge">Dezembro 2025</span>
+      <span class="month-count">4 atualizações</span>
       <div class="month-line"></div>
     </div>
-    <div class="entries">
 
-      <div class="entry">
-        <span class="entry-date">29/12</span>
-        <div class="entry-body">
-          <span class="entry-text">Novo parâmetro Seneia IPI no Imendes; correções na tela Imendes</span>
-          <div class="entry-tags"><span class="tag tag-farm">FARMÁCIA</span><span class="tag tag-new">NOVO</span></div>
-        </div>
-      </div>
+    <div class="card feat">
+      <div class="card-left"><span class="card-date">29/12</span>
+        <span class="card-title">Novo parâmetro no Imendes; correções na tela de configuração</span></div>
+      <div class="tag-row"><span class="tag feat">Novo</span><span class="tag mod-farm">Farmácia</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">23/12</span>
-        <div class="entry-body">
-          <span class="entry-text">Validação de campos na tela CST</span>
-          <div class="entry-tags"><span class="tag tag-fiscal">FISCAL</span><span class="tag tag-new">NOVO</span></div>
-        </div>
-      </div>
+    <div class="card feat">
+      <div class="card-left"><span class="card-date">23/12</span>
+        <span class="card-title">Validações aprimoradas nos campos tributários</span></div>
+      <div class="tag-row"><span class="tag feat">Novo</span><span class="tag mod">Fiscal</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">23/12</span>
-        <div class="entry-body">
-          <span class="entry-text">Automatização da tributação regular NF-e</span>
-          <div class="entry-tags"><span class="tag tag-fiscal">FISCAL</span><span class="tag tag-new">NOVO</span></div>
-        </div>
-      </div>
+    <div class="card feat">
+      <div class="card-left"><span class="card-date">23/12</span>
+        <span class="card-title">Tributação automática na emissão de NF-e</span></div>
+      <div class="tag-row"><span class="tag feat">Novo</span><span class="tag mod">Fiscal</span></div>
+    </div>
 
-      <div class="entry">
-        <span class="entry-date">22/12</span>
-        <div class="entry-body">
-          <span class="entry-text">Correção no saneamento Imendes: CBS e IBS nulos</span>
-          <div class="entry-tags"><span class="tag tag-farm">FARMÁCIA</span><span class="tag tag-fix">CORREÇÃO</span></div>
-        </div>
-      </div>
-
+    <div class="card fix">
+      <div class="card-left"><span class="card-date">22/12</span>
+        <span class="card-title">Correção no processamento de dados do Imendes</span></div>
+      <div class="tag-row"><span class="tag fix">Correção</span><span class="tag mod-farm">Farmácia</span></div>
     </div>
   </div>
 
-</div><!-- /container -->
+  <footer>
+    Gerado em 14/05/2026 &nbsp;·&nbsp; LC Sistemas ERP &nbsp;·&nbsp; Versão 3.2.0
+  </footer>
 
+</div>
 </body>
 </html>

@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hub de Documentos</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0f0f0f;
+    --surface: #161616;
+    --surface2: #1e1e1e;
+    --border: #2a2a2a;
+    --border-hover: #3d3d3d;
+    --text: #e8e4dc;
+    --muted: #6b6b6b;
+    --changelog: #d4a84b;
+    --changelog-bg: #1c1608;
+    --changelog-border: #3d2e0a;
+    --docs: #5b8dd9;
+    --docs-bg: #080f1c;
+    --docs-border: #0d2040;
+    --reports: #6dbf8a;
+    --reports-bg: #081208;
+    --reports-border: #0d2e14;
+    --tasks: #c47eb5;
+    --tasks-bg: #160d14;
+    --tasks-border: #361c30;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    min-height: 100vh;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+  /* grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 4rem 2rem 6rem;
+  }
+
+  /* header */
+  header {
+    margin-bottom: 4rem;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 1px;
+    background: var(--muted);
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 1rem;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--muted);
+  }
+
+  .subtitle {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 420px;
+  }
+
+  /* search */
+  .search-wrap {
+    margin-bottom: 3rem;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  .search-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 10px 16px;
+    transition: border-color 0.2s;
+  }
+
+  .search-box:focus-within {
+    border-color: var(--border-hover);
+  }
+
+  .search-box span {
+    color: var(--muted);
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+
+  .search-box input {
+    background: none;
+    border: none;
+    outline: none;
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    width: 100%;
+  }
+
+  .search-box input::placeholder { color: var(--muted); }
+
+  /* section label */
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* category grid */
+  .categories {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .category {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .category:hover { border-color: var(--border-hover); transform: translateY(-1px); }
+
+  .category:nth-child(1) { animation-delay: 0.15s; }
+  .category:nth-child(2) { animation-delay: 0.2s; }
+  .category:nth-child(3) { animation-delay: 0.25s; }
+  .category:nth-child(4) { animation-delay: 0.3s; }
+
+  .cat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .cat-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+  }
+
+  .cat-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .cat-count {
+    font-size: 10px;
+    color: var(--muted);
+    background: var(--surface2);
+    padding: 2px 8px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+  }
+
+  .cat-body { padding: 8px 0; }
+
+  .doc-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 18px;
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 12px;
+    transition: color 0.15s, background 0.15s;
+    border-left: 2px solid transparent;
+  }
+
+  .doc-link:hover {
+    color: var(--text);
+    background: var(--surface2);
+  }
+
+  .doc-link .doc-name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow: hidden;
+  }
+
+  .doc-link .doc-name span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .doc-link .arrow {
+    font-size: 10px;
+    opacity: 0;
+    transition: opacity 0.15s;
+    flex-shrink: 0;
+  }
+
+  .doc-link:hover .arrow { opacity: 1; }
+
+  .pending {
+    opacity: 0.35;
+    cursor: default;
+    pointer-events: none;
+  }
+
+  .tag-pending {
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 2px 6px;
+    border-radius: 3px;
+  }
+
+  /* category colors */
+  .changelog .cat-header { background: var(--changelog-bg); border-color: var(--changelog-border); }
+  .changelog .cat-dot { background: var(--changelog); }
+  .changelog .cat-title { color: var(--changelog); }
+  .changelog .doc-link:hover { border-left-color: var(--changelog); }
+
+  .docs .cat-header { background: var(--docs-bg); border-color: var(--docs-border); }
+  .docs .cat-dot { background: var(--docs); }
+  .docs .cat-title { color: var(--docs); }
+  .docs .doc-link:hover { border-left-color: var(--docs); }
+
+  .reports .cat-header { background: var(--reports-bg); border-color: var(--reports-border); }
+  .reports .cat-dot { background: var(--reports); }
+  .reports .cat-title { color: var(--reports); }
+  .reports .doc-link:hover { border-left-color: var(--reports); }
+
+  .tasks .cat-header { background: var(--tasks-bg); border-color: var(--tasks-border); }
+  .tasks .cat-dot { background: var(--tasks); }
+  .tasks .cat-title { color: var(--tasks); }
+  .tasks .doc-link:hover { border-left-color: var(--tasks); }
+
+  /* empty state */
+  .empty-state {
+    padding: 20px 18px;
+    font-size: 11px;
+    color: var(--muted);
+    font-style: italic;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* footer */
+  footer {
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--muted);
+    animation: fadeUp 0.5s 0.4s ease both;
+  }
+
+  .footer-path { letter-spacing: 0.05em; }
+
+  /* no results */
+  #no-results {
+    display: none;
+    text-align: center;
+    padding: 3rem;
+    color: var(--muted);
+    font-size: 12px;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 640px) {
+    .wrap { padding: 2.5rem 1.25rem 4rem; }
+    .categories { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">hub de documentos</div>
+    <h1>Meus<br><em>documentos</em></h1>
+    <p class="subtitle">Central de acesso a changelogs, documentações, relatórios e tarefas.</p>
+  </header>
+
+  <div class="search-wrap">
+    <div class="search-box">
+      <span>buscar /</span>
+      <input type="text" id="search" placeholder="nome do documento..." autocomplete="off">
+    </div>
+  </div>
+
+  <p class="section-label">categorias — 4 pastas</p>
+
+  <div class="categories" id="categories">
+
+    <!-- CHANGELOG -->
+    <div class="category changelog" data-cat="changelog">
+      <div class="cat-header">
+        <div class="cat-title">
+          <span class="cat-dot"></span>
+          changelogs/
+        </div>
+        <span class="cat-count" id="count-changelog">0 docs</span>
+      </div>
+      <div class="cat-body" id="body-changelog">
+        <a class="doc-link" href="changelogs/CHANGELOG_FINANCEIRO_2026.html">
+          <span class="doc-name"><span>—</span><span>CHANGELOG_FINANCEIRO_2026</span></span>
+          <span class="arrow">→</span>
+        </a>
+        <a class="doc-link" href="changelogs/CHANGELOG_GERAL.html">
+          <span class="doc-name"><span>—</span><span>CHANGELOG_GERAL</span></span>
+          <span class="arrow">→</span>
+        </a>
+        <a class="doc-link" href="changelogs/CHANGELOG_LUCAS_06_08_05_2026.html">
+          <span class="doc-name"><span>—</span><span>CHANGELOG_LUCAS_06_08_05_2026</span></span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- DOCUMENTAÇÕES -->
+    <div class="category docs" data-cat="documentacoes">
+      <div class="cat-header">
+        <div class="cat-title">
+          <span class="cat-dot"></span>
+          documentacoes/
+        </div>
+        <span class="cat-count" id="count-documentacoes">pendente</span>
+      </div>
+      <div class="cat-body" id="body-documentacoes">
+        <!--
+          INSTRUÇÃO: Quando subir a pasta documentacoes/, adicione os links aqui.
+          Exemplo:
+          <a class="doc-link" href="documentacoes/processo-fiscal.html">
+            <span class="doc-name"><span>—</span><span>processo-fiscal</span></span>
+            <span class="arrow">→</span>
+          </a>
+        -->
+        <div class="empty-state">pasta ainda não publicada — adicione os links quando subir</div>
+      </div>
+    </div>
+
+    <!-- RELATÓRIOS -->
+    <div class="category reports" data-cat="relatorios">
+      <div class="cat-header">
+        <div class="cat-title">
+          <span class="cat-dot"></span>
+          relatorios/
+        </div>
+        <span class="cat-count" id="count-relatorios">pendente</span>
+      </div>
+      <div class="cat-body" id="body-relatorios">
+        <!--
+          INSTRUÇÃO: Quando subir a pasta relatorios/, adicione os links aqui.
+          Exemplo:
+          <a class="doc-link" href="relatorios/vendas-mensais.html">
+            <span class="doc-name"><span>—</span><span>vendas-mensais</span></span>
+            <span class="arrow">→</span>
+          </a>
+        -->
+        <div class="empty-state">pasta ainda não publicada — adicione os links quando subir</div>
+      </div>
+    </div>
+
+    <!-- TASKS -->
+    <div class="category tasks" data-cat="tasks">
+      <div class="cat-header">
+        <div class="cat-title">
+          <span class="cat-dot"></span>
+          tasks/
+        </div>
+        <span class="cat-count" id="count-tasks">pendente</span>
+      </div>
+      <div class="cat-body" id="body-tasks">
+        <!--
+          INSTRUÇÃO: Quando subir a pasta tasks/, adicione os links aqui.
+          Exemplo:
+          <a class="doc-link" href="tasks/onboarding-cliente.html">
+            <span class="doc-name"><span>—</span><span>onboarding-cliente</span></span>
+            <span class="arrow">→</span>
+          </a>
+        -->
+        <div class="empty-state">pasta ainda não publicada — adicione os links quando subir</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="no-results">nenhum documento encontrado para "<span id="search-term"></span>"</div>
+
+  <footer>
+    <span class="footer-path">github.io / meu-hub-docs</span>
+    <span id="footer-date"></span>
+  </footer>
+
+</div>
+
+<script>
+  // footer date
+  document.getElementById('footer-date').textContent =
+    new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
+
+  // count docs per category
+  document.querySelectorAll('.category').forEach(cat => {
+    const id = cat.dataset.cat;
+    const links = cat.querySelectorAll('a.doc-link');
+    const countEl = document.getElementById('count-' + id);
+    if (links.length > 0) {
+      countEl.textContent = links.length + (links.length === 1 ? ' doc' : ' docs');
+    }
+  });
+
+  // search
+  const searchInput = document.getElementById('search');
+  const noResults = document.getElementById('no-results');
+  const searchTerm = document.getElementById('search-term');
+
+  searchInput.addEventListener('input', () => {
+    const q = searchInput.value.toLowerCase().trim();
+    let total = 0;
+
+    document.querySelectorAll('.category').forEach(cat => {
+      const links = cat.querySelectorAll('a.doc-link');
+      let visible = 0;
+      links.forEach(link => {
+        const name = link.querySelector('.doc-name span:last-child').textContent.toLowerCase();
+        const show = !q || name.includes(q);
+        link.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+      total += visible;
+
+      const empty = cat.querySelector('.empty-state');
+      if (empty) {
+        empty.style.display = q ? 'none' : '';
+      }
+    });
+
+    noResults.style.display = (q && total === 0) ? 'block' : 'none';
+    searchTerm.textContent = q;
+  });
+</script>
+</body>
+</html>

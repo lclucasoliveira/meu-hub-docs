@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Changelog Financeiro - ERP 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e9eef5 100%);
+    color: #2c3e50;
+    line-height: 1.6;
+    padding: 0;
+  }
+  header {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: white;
+    padding: 50px 30px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  }
+  header h1 { font-size: 2.4em; font-weight: 700; margin-bottom: 8px; }
+  header p { font-size: 1.1em; opacity: 0.92; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 30px 20px; }
+
+  .resumo {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    border-left: 5px solid #2a5298;
+  }
+  .resumo h2 { color: #1e3c72; margin-bottom: 15px; font-size: 1.6em; }
+  .resumo p { margin-bottom: 12px; font-size: 1.05em; }
+  .resumo ul { margin: 10px 0 10px 25px; }
+  .resumo li { margin-bottom: 6px; }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+  }
+  .stat-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+  }
+  .stat-card .num { font-size: 2.2em; font-weight: 700; display: block; }
+  .stat-card .lbl { font-size: 0.9em; opacity: 0.95; }
+
+  nav.toc {
+    background: white;
+    border-radius: 12px;
+    padding: 25px 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  nav.toc h2 { color: #1e3c72; margin-bottom: 15px; font-size: 1.4em; }
+  nav.toc ol { list-style: none; counter-reset: tocnum; }
+  nav.toc li {
+    counter-increment: tocnum;
+    padding: 8px 0;
+    border-bottom: 1px dashed #e0e6ed;
+  }
+  nav.toc li:last-child { border-bottom: none; }
+  nav.toc li::before {
+    content: counter(tocnum) ". ";
+    color: #2a5298;
+    font-weight: 600;
+    margin-right: 6px;
+  }
+  nav.toc a {
+    color: #2c3e50;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  nav.toc a:hover { color: #2a5298; text-decoration: underline; }
+  nav.toc .data { color: #7a8a9a; font-size: 0.88em; margin-left: 6px; }
+
+  .change {
+    background: white;
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 22px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    border-left: 6px solid #95a5a6;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .change:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 18px rgba(0,0,0,0.09);
+  }
+  .change.fix { border-left-color: #e74c3c; }
+  .change.improve { border-left-color: #3498db; }
+  .change.feature { border-left-color: #27ae60; }
+
+  .change-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.78em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .badge.fix { background: #fdecea; color: #c0392b; }
+  .badge.improve { background: #e6f3fb; color: #2471a3; }
+  .badge.feature { background: #e8f6ef; color: #1e8449; }
+
+  .data-tag {
+    background: #ecf0f1;
+    color: #34495e;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.85em;
+    font-family: "SFMono-Regular", Consolas, monospace;
+  }
+
+  .change h3 {
+    color: #1e3c72;
+    font-size: 1.3em;
+    margin-bottom: 10px;
+    flex-basis: 100%;
+  }
+  .change p { margin-bottom: 10px; }
+  .change ul { margin: 10px 0 10px 22px; }
+  .change li { margin-bottom: 6px; }
+  .change .modulos {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid #ecf0f1;
+    font-size: 0.9em;
+    color: #7a8a9a;
+  }
+  .change .modulos strong { color: #34495e; }
+  .pill {
+    display: inline-block;
+    background: #f0f3f7;
+    color: #4a5b6e;
+    padding: 2px 9px;
+    border-radius: 12px;
+    margin: 0 4px 4px 0;
+    font-size: 0.85em;
+  }
+
+  footer {
+    text-align: center;
+    color: #7a8a9a;
+    padding: 30px 20px;
+    font-size: 0.9em;
+  }
+  @media (max-width: 600px) {
+    header h1 { font-size: 1.6em; }
+    .container { padding: 20px 12px; }
+    .change { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Changelog do Modulo Financeiro</h1>
+  <p>Evolucao do ERP no exercicio 2026 - Janeiro a Abril</p>
+</header>
+
+<div class="container">
+
+  <section class="resumo">
+    <h2>Resumo Executivo</h2>
+    <p>
+      Ao longo de 2026, o modulo financeiro do ERP passou por uma reformulacao
+      profunda. Os principais focos foram: <strong>recebimento e pagamento parcial
+      de titulos</strong>, <strong>tratamento correto de juros e multa</strong>,
+      <strong>rateio proporcional de descontos</strong> entre multiplos titulos
+      e a <strong>conferencia cega no fechamento de caixa</strong>.
+    </p>
+    <p>O resultado pratico para o usuario:</p>
+    <ul>
+      <li>O Contas a Receber e o Contas a Pagar agora se comportam de forma equivalente, com regras consistentes.</li>
+      <li>E possivel quitar parte de um titulo sem perder o saldo restante e sem cobrar juros indevidamente em recebimentos posteriores.</li>
+      <li>Multa, juros e desconto sao aplicados em ordem previsivel e ratais entre parcelas de forma justa.</li>
+      <li>O fechamento de caixa pode ser feito as cegas, com o operador informando os valores antes de ver o sistema.</li>
+      <li>Permissoes especificas controlam quem pode editar juros e multa em titulos ja baixados.</li>
+    </ul>
+
+    <div class="stats">
+      <div class="stat-card"><span class="num">25</span><span class="lbl">Commits financeiros</span></div>
+      <div class="stat-card"><span class="num">5</span><span class="lbl">Modulos impactados</span></div>
+      <div class="stat-card"><span class="num">15+</span><span class="lbl">Correcoes de bug</span></div>
+      <div class="stat-card"><span class="num">10+</span><span class="lbl">Melhorias / novidades</span></div>
+    </div>
+  </section>
+
+  <nav class="toc">
+    <h2>Indice de Navegacao</h2>
+    <ol>
+      <li><a href="#c1">Reformulacao tributaria e relatorio de produtos vendidos<span class="data">(11/02/2026)</span></a></li>
+      <li><a href="#c2">Novo relatorio: Extrato de Produtos Vendidos<span class="data">(11/02/2026)</span></a></li>
+      <li><a href="#c3">Reformulacao do Recebimento Parcial<span class="data">(11/02/2026)</span></a></li>
+      <li><a href="#c4">Correcao de juros e multa em recebimentos parciais<span class="data">(27/02/2026)</span></a></li>
+      <li><a href="#c5">ICMS desonerado e exibicao de juros/multa no recebimento<span class="data">(09/03/2026)</span></a></li>
+      <li><a href="#c6">Captura de multa restante em recebimentos pequenos<span class="data">(09/03/2026)</span></a></li>
+      <li><a href="#c7">Visualizacao de titulos selecionados via checkbox<span class="data">(06/03/2026)</span></a></li>
+      <li><a href="#c8">Reajuste financeiro e controle de caixa<span class="data">(18/03/2026)</span></a></li>
+      <li><a href="#c9">Novo campo data de recebimento (data_rec)<span class="data">(20/03/2026)</span></a></li>
+      <li><a href="#c10">Correcao da data exibida no controle de caixa<span class="data">(23/03/2026)</span></a></li>
+      <li><a href="#c11">Pagamento parcial em Contas a Pagar<span class="data">(27/03/2026)</span></a></li>
+      <li><a href="#c12">Correcao de juros em pagamentos parciais (Pagar)<span class="data">(06/04/2026)</span></a></li>
+      <li><a href="#c13">Coluna de encargos e ajuste de juros (Receber)<span class="data">(06/04/2026)</span></a></li>
+      <li><a href="#c14">Conferencia cega de fechamento de caixa<span class="data">(06/04/2026)</span></a></li>
+      <li><a href="#c15">Correcoes do movimento de caixa e da conferencia cega<span class="data">(08/04/2026)</span></a></li>
+      <li><a href="#c16">Campos de encargos (Juros + Multa) na tela de recebimento<span class="data">(08/04/2026)</span></a></li>
+      <li><a href="#c17">Padronizacao do calculo de encargos e pesquisa<span class="data">(13/04/2026)</span></a></li>
+      <li><a href="#c18">Integridade e melhorias no Contas a Pagar<span class="data">(20/04/2026)</span></a></li>
+      <li><a href="#c19">Rateio proporcional e melhorias no Receber/Pagar/PDV<span class="data">(28/04/2026)</span></a></li>
+      <li><a href="#c20">Correcao de descontos e valor restante<span class="data">(28/04/2026)</span></a></li>
+      <li><a href="#c21">Correcao do id_empresa na listagem sintetica do Pagar<span class="data">(29/04/2026)</span></a></li>
+      <li><a href="#c22">Ordem de abatimento (multa, juros, principal)<span class="data">(29/04/2026)</span></a></li>
+      <li><a href="#c23">Rateio de desconto pelo principal restante<span class="data">(29/04/2026)</span></a></li>
+      <li><a href="#c24">Preservacao de desconto e financeiros ao editar vencimento<span class="data">(29/04/2026)</span></a></li>
+      <li><a href="#c25">Edicao controlada de juros e multa em titulos baixados<span class="data">(30/04/2026)</span></a></li>
+    </ol>
+  </nav>
+
+  <article class="change improve" id="c1">
+    <div class="change-header">
+      <span class="badge improve">Melhoria</span>
+      <span class="data-tag">11/02/2026</span>
+    </div>
+    <h3>Reformulacao tributaria e suporte a exportacao em PDF</h3>
+    <p>Refinamento das regras tributarias e validacoes do sistema, com impacto indireto no financeiro pelas integracoes
+       de relatorios e DAO/UI. Inclui:</p>
+    <ul>
+      <li>Tratamento de CST 202 e 203 como ST com MVA.</li>
+      <li>Ajuste no tamanho maximo do codigo de beneficio fiscal (10 caracteres).</li>
+      <li>Adicionado botao de impressao em PDF do extrato de produtos vendidos no Contas a Receber.</li>
+      <li>Mensagens de erro mais claras em cancelamento de NF-e.</li>
+    </ul>
+    <div class="modulos"><strong>Areas afetadas:</strong>
+      <span class="pill">Receber</span><span class="pill">Tributario</span><span class="pill">NF-e</span></div>
+  </article>
+
+  <article class="change feature" id="c2">
+    <div class="change-header">
+      <span class="badge feature">Nova funcionalidade</span>
+      <span class="data-tag">11/02/2026</span>
+    </div>
+    <h3>Novo relatorio: Extrato de Produtos Vendidos por Recebimento</h3>
+    <p>Foi adicionado um novo relatorio que permite imprimir o extrato detalhado dos produtos vendidos em cada
+       recebimento. E util para o cliente conferir, junto a baixa de um titulo, exatamente quais produtos
+       compoem aquele valor recebido.</p>
+    <p>Tambem houve correcao de erro de digitacao em relatorio de entrada (VOLOR -> VALOR DO FRETE) e atualizacoes
+       em colunas opcionais de preco no cadastro de produto.</p>
+    <div class="modulos"><strong>Areas afetadas:</strong>
+      <span class="pill">Receber</span><span class="pill">Relatorios</span></div>
+  </article>
+
+  <article class="change feature" id="c3">
+    <div class="change-header">
+      <span class="badge feature">Reformulacao</span>
+      <span class="data-tag">11/02/2026</span>
+    </div>
+    <h3>Reformulacao completa do processo de Recebimento Parcial</h3>
+    <p>O processo de recebimento parcial no Contas a Receber foi totalmente refatorado. Antes a logica era confusa
+       e gerava saldos incorretos quando o cliente quitava parte de um titulo. Agora:</p>
+    <ul>
+      <li>O sistema controla com precisao quanto ja foi recebido e quanto resta.</li>
+      <li>As telas de recebimento, detalhes do titulo e listagem foram reorganizadas para mostrar
+          claramente o saldo aberto.</li>
+      <li>Os recibos (C_RECEBER_RECIBO, C_RECEBER_RECIBO_AGRUPADO) e a listagem sintetica foram atualizados
+          para refletir o novo modelo.</li>
+      <li>O relatorio de Contas a Vencer/Vencidas detalhado tambem foi ajustado.</li>
+    </ul>
+    <div class="modulos"><strong>Areas afetadas:</strong>
+      <span class="pill">Receber</span><span class="pill">Pagamento</span><span class="pill">Recebimento</span><span class="pill">Relatorios</span></div>
+  </article>
+
+  <article class="change fix" id="c4">
+    <div class="change-header">
+      <span class="badge fix">Correcao</span>
+      <span class="data-tag">27/02/2026</span>
+    </div>
+    <h3>Correcao da aplicacao de juros e multa em recebimento parcial</h3>
+    <p>Quando o cliente pagava parte de um titulo em atraso, os encargos (juros e multa) nao estavam sendo aplicados
+       corretamente. A correcao garante que, ao receber parcialmente, o sistema calcula e desconta os encargos
+       proporcionais antes de abater o principal, deixando o saldo restante consistente.</p>
+    <div class="modulos"><strong>Areas afetadas:</strong>
+      <span class="pill">Receber</span><span class="pill">Pagamento</span></div>
+  </article>
+
+  <article class="change improve" id="c5">
+    <div class="change-header">
+      <span class="badge improve">Melhoria</span>
+      <span class="data-tag">09/03/2026</span>
+    </div>
+    <h3>Visibilidade de juros e multa acumulados na tela de recebimento</h3>
+    <p>Foram adicionados na tela de recebimento dois campos somente leitura mostrando o total de Multa e o total de
+       Juros acumulados de todos os titulos selecionados. Antes da confirmacao da baixa o operador ja consegue ver
+       claramente quanto esta sendo cobrado de encargos. A regra de aplicacao de multa quando o recebimento e menor
+       que o encargo tambem foi reajustada.</p>
+    <p>Houve tambem uma alteracao na area fiscal nao financeira: a opcao de excluir o ICMS desonerado da base de
+       PIS/COFINS na NF-e de saida (configuravel por natureza de operacao).</p>
+    <div class="modulos"><strong>Areas afetadas:</strong>
+      <span class="pill">Receber</span><span class="pill">Pagamento</span><span class="pill">NF-e</span></div>
+  </article>
+
+  <article class="change fix" id="c6">
+    <div class="change-header">
+      <span class="badge fix">Correcao</span>
+      <span class="data-tag">09/03/2026</span>
+    </div>
+    <h3>Captura correta da multa restante em recebimentos pequenos</h3>
+    <p>Quando o valor recebido era inferior ao valor da multa, o sistema nao tratava esse cenario corretamente.
+       Foi criada uma rotina especifica para capturar quanto da multa ainda esta em aberto, garantindo que o
+       saldo restante refita exatamente o que ainda deve ser cobrado.</p>
+    <div class="modulos"><strong>Areas afetadas:</strong>
+      <span class="pill">Receber</span></div>
+  </article>
+
+  <article class="change improve" id="c7">
+    <div class="change-header">
+      <span class="badge improve">Melhoria</span>
+      <span class="data-tag">06/03/2026</span>
+    </div>
+    <h3>Visualizacao de titulos selecionados via checkbox</h3>
+    <p>Antes, ao tentar imprimir/visualizar titulos no Contas a Pagar e no Contas a Receber, o sistema apenas
+       exibia uma mensagem generica ("Impossivel Visualizacao !!!"). Agora:</p>
+    <ul>
+      <li>A impressao traz todos os titulos selecionados via checkbox de uma so vez.</li>
+      <li>As mensagens de alerta foram reformuladas e explicam o tipo de titulo esperado e o motivo de nao ser exibido.</li>
+    </ul>
+    <div class="modulos"><strong>Areas afetadas:</strong>
+      <span class="pill">Pagar</span><span class="pill">Receber</span><span class="pill">Entrada</span></div>
+  </article>
+
+  <article class="change improve" id="c8">
+    <div class="change-header">
+      <span class="badge improve">Melhoria</span>
+      <span class="data-tag">18/03/2026</span>
+    </div>
+    <h3>Reajustes no financeiro e no controle de caixa</h3>
+    <p>Ajustes internos no fluxo entre o recebimento e o controle de caixa, tornando a integracao mais consistente
+       e corrigindo divergencias na gravacao temporaria das movimentacoes de caixa.</p>
+    <div class="modulos"><strong>Areas afetadas:</strong>
+      <span class="pill">ControleCaixa</span><span class="pill">Receber</span></div>
+  </article>
+
+  <article class="change feature" id="c9">
+    <div class="change-header">
+      <span class="badge feature">Nova funcionalidade</span>
+      <span class="data-tag">20/03/2026</span>
+    </div>
+    <h3>Registro da data efetiva do recebimento (campo data_rec)</h3>
+    <p>O sistema passou a armazenar a data real em que o recebimento foi efetuado em um campo dedicado.
+       Isso e essencial para:</p>
+    <ul>
+      <li>Relatorios filtrarem por data de baixa, alem da data de vencimento.</li>
+      <li>Conciliacao com o controle de caixa.</li>
+      <li>Listagem sintetica do Receber refletir corretamente o periodo de recebimento.</li>
+    </ul>
+    <div class="modulos"><strong>Areas afetadas:</strong>
+      <span class="pill">Receber</span><span class="pill">Recebimento</span><span class="pill">ControleCaixa</span><span class="pill">Boleto</span><span class="pill">Relatorios</span></div>
+  </article>
+
+  <article class="change fix" id="c10">
+    <div class="change-header">
+      <span class="badge fix">Correcao</span>
+      <span class="data-tag">23/03/2026</span>
+    </div>
+    <h3>Correcao da data exibida no controle de caixa</h3>
+    <p>A data mostrada no controle de caixa estava deslocada em alguns cenarios. A correcao garante que o
+       relatorio diario reflita exatamente o dia da operacao.</p>
+    <div class="modulos"><strong>Areas afetadas:</strong>
+      <span class="pill">ControleCaixa</span></div>
+  </article>
+
+  <article class="change feature" id="c11">
+    <div class="change-header">
+      <span class="badge feature">Nova funcionalidade</span>
+      <span class="data-tag">27/03/2026</span>
+    </div>
+    <h3>Pagamento parcial em Contas a Pagar</h3>
+    <p>O Contas a Pagar agora suporta pagamento parcial, com logica equivalente ao Contas a Receber.
+       Ao quitar parte de um titulo, o sistema:</p>
+    <ul>
+      <li>Mantem o saldo restante em aberto, calculando juros e multa proporcionais.</li>
+      <li>Atualiza a listagem sintetica do Pagar com os novos campos.</li>
+      <li>Reflete a movimentacao no Dashboard Financeiro.</li>
+      <li>Mantem o vinculo com o controle de caixa temporario.</li>
+    </ul>
+    <p>Essa era uma das maiores divergencias historicas entre os dois modulos e agora foi nivelada.</p>
+    <div class="modulos"><strong>Areas afetadas:</strong>
+      <span class="pill">Pagar</span><span class="pill">Pagamento</span><span class="pill">ControleCaixa</span><span class="pill">Dashboard</span></div>
+  </article>
+
+  <article class="change fix" id="c12">
+    <div class="change-header">
+      <span class="badge fix">Correcao</span>
+      <span class="data-tag">06/04/2026</span>
+    </div>
+    <h3>Juros nao cobrados em duplicidade no Pagar</h3>
+    <p>No Contas a Pagar, ao realizar um segundo pagamento parcial, o sistema cobrava novamente os juros que ja
+       haviam sido pagos no primeiro abatimento. A correcao subtrai os juros ja pagos do calculo subsequente,
+       evitando cobranca duplicada.</p>
+    <div class="modulos"><strong>Areas afetadas:</strong>
+      <span class="pill">Pagar</span></div>
+  </article>
+
+  <article class="change improve" id="c13">
+    <div class="change-header">
+      <span class="badge improve">Melhoria</span>
+      <span class="data-tag">06/04/2026</span>
+    </div>
+    <h3>Coluna de encargos no Receber e correcao do calculo de juros</h3>
+    <p>Inclusao de uma nova coluna "Encargos" (juros + multa) na grade do Contas a Receber, com totalizador no
+       rodape. Tambem foi corrigida a forma como o relatorio sintetico calcula juros, separando o periodo
+       anterior ao vencimento via novo campo dias_antes para evitar cobranca duplicada em parciais.</p>
+    <div class="modulos"><strong>Areas afetadas:</strong>
+      <span class="pill">Receber</span><span class="pill">Relatorios</span></div>
+  </article>
+
+  <article class="change feature" id="c14">
+    <div class="change-header">
+      <span class="badge feature">Nova funcionalidade</span>
+      <span class="data-tag">06/04/2026</span>
+    </div>
+    <h3>Conferencia cega no fechamento de caixa</h3>
+    <p>Implementacao de um novo modo de fechamento de caixa em que o operador informa os valores apurados ANTES
+       de ver o que o sistema registrou. Isso aumenta o controle anti-fraude e evita que o operador "ajuste" os
+       valores para bater com o sistema.</p>
+    <ul>
+      <li>Configuracao geral do sistema ganhou parametro para ativar a conferencia cega.</li>
+      <li>Tela do menu de Vendas foi expandida para acomodar o novo fluxo.</li>
+      <li>Pagamentos passaram a registrar dados adicionais para a conferencia.</li>
+      <li>Impressoes de venda adaptadas.</li>
+    </ul>
+    <div class="modulos"><strong>Areas afetadas:</strong>
+      <span class="pill">Caixa</span><span class="pill">Configuracao</span><span class="pill">Pagamento</span><span class="pill">Venda</span></div>
+  </article>
+
+  <article class="change fix" id="c15">
+    <div class="change-header">
+      <span class="badge fix">Correcao</span>
+      <span class="data-tag">08/04/2026</span>
+    </div>
+    <h3>Ajustes no movimento de caixa e na conferencia cega</h3>
+    <p>Sequencia de correcoes complementares a conferencia cega de caixa:</p>
+    <ul>
+      <li>Inclusao do campo id_caixadet para vincular cada movimento ao detalhe do caixa correspondente.</li>
+      <li>Reajuste da listagem de recebimentos feitos no PDV no relatorio de movimento de caixa.</li>
+      <li>Correcao da reimpressao da bobina de caixa.</li>
+    </ul>
+    <div class="modulos"><strong>Areas afetadas:</strong>
+      <span class="pill">Caixa</span><span class="pill">Receber</span><span class="pill">Relatorios</span></div>
+  </article>
+
+  <article class="change feature" id="c16">
+    <div class="change-header">
+      <span class="badge feature">Nova funcionalidade</span>
+      <span class="data-tag">08/04/2026</span>
+    </div>
+    <h3>Campos de encargos (Juros + Multa) na tela de recebimento</h3>
+    <p>A tela de recebimento ganhou campos especificos para juros e multa, permitindo que o operador veja e (com
+       permissao adequada) ajuste esses valores antes de confirmar a baixa.</p>
+    <div class="modulos"><strong>Areas afetadas:</strong>
+      <span class="pill">Receber</span></div>
+  </article>
+
+  <article class="change fix" id="c17">
+    <div class="change-header">
+      <span class="badge fix">Correcao</span>
+      <span class="data-tag">13/04/2026</span>
+    </div>
+    <h3>Padronizacao do calculo de encargos e correcao de pesquisa</h3>
+    <ul>
+      <li><strong>Pagar:</strong> a logica duplicada do calculo foi unificada em um metodo unico (calcularEncargos);
+          a multa nao incide novamente quando ja foi paga integralmente.</li>
+      <li><strong>Receber:</strong> calculo de juros migrado para BigDecimal com arredondamento HALF_UP em tres
+          pontos do codigo, eliminando diferenca de centavos. A atualizacao da data de recebimento tambem passou a
+          buscar a data real da operacao.</li>
+      <li><strong>Pagar:</strong> aplicacao de escape de aspas simples nos filtros de pesquisa, evitando erros ao
+          buscar por nomes que contenham apostrofo.</li>
+    </ul>
+    <div class="modulos"><strong>Areas afetadas:</strong>
+      <span class="pill">Pagar</span><span class="pill">Receber</span></div>
+  </article>
+
+  <article class="change improve" id="c18">
+    <div class="change-header">
+      <span class="badge improve">Melhoria</span>
+      <span class="data-tag">20/04/2026</span>
+    </div>
+    <h3>Integridade e melhorias no Contas a Pagar</h3>
+    <ul>
+      <li>Bloqueio da edicao do valor e da forma de pagamento quando ja existe pagamento (total ou parcial)
+          registrado, espelhando o comportamento do Contas a Receber.</li>
+      <li>Remocao de uma restauracao indevida do valor original ao editar o titulo, que estava corrompendo o
+          calculo do valor corrigido.</li>
+      <li>Registro automatico no historico de qualquer alteracao em valor, datas ou fornecedor, com valores
+          anterior e novo.</li>
+      <li>Nova consulta dedicada existePagamentos() para diferenciar baixas de Pagar das de Receber.</li>
+      <li>Listagem agora pode ser ordenada pela Forma de Pagamento.</li>
+    </ul>
+    <div class="modulos"><strong>Areas afetadas:</strong>
+      <span class="pill">Pagar</span><span class="pill">Recebimento</span></div>
+  </article>
+
+  <article class="change feature" id="c19">
+    <div class="change-header">
+      <span class="badge feature">Nova funcionalidade</span>
+      <span class="data-tag">28/04/2026</span>
+    </div>
+    <h3>Rateio proporcional de desconto e melhorias gerais</h3>
+    <p>Conjunto de melhorias com impacto significativo no dia a dia:</p>
+    <ul>
+      <li><strong>Rateio proporcional</strong> de desconto e pagamento entre multiplos titulos selecionados, valido
+          no Contas a Receber, Contas a Pagar e Recebimento via PDV.</li>
+      <li>Nova permissao <strong>PDV_RECEBIMENTO_EDITAR_JUROS_MULTA</strong> que controla quem pode editar
+          juros e multa diretamente no recebimento do PDV.</li>
+      <li>Nova opcao de <strong>ordenacao por data de recebimento/pagamento</strong> nas listagens.</li>
+      <li>Correcoes de validacoes de data nos detalhes do titulo.</li>
+      <li>Ajustes no relatorio sintetico do Pagar.</li>
+    </ul>
+    <div class="modulos"><strong>Areas afetadas:</strong>
+      <span class="pill">Receber</span><span class="pill">Pagar</span><span class="pill">Pagamento</span><span class="pill">Recebimento</span><span class="pill">PDV</span><span class="pill">Permissoes</span></div>
+  </article>
+
+  <article class="change fix" id="c20">
+    <div class="change-header">
+      <span class="badge fix">Correcao</span>
+      <span class="data-tag">28/04/2026</span>
+    </div>
+    <h3>Calculo de descontos e exibicao do valor restante</h3>
+    <ul>
+      <li>O campo "Valor Original" foi renomeado para "Valor Restante", refletindo o que o sistema realmente
+          mostra (saldo aberto, nao o valor inicial bruto).</li>
+      <li>O calculo do campo passou a exibir o saldo restante dos titulos, em vez do valor original.</li>
+      <li>O rateio de desconto agora usa o principal restante de cada titulo como teto, evitando estouro em
+          parcelas que ja tiveram pagamentos parciais.</li>
+      <li>Validacao adicional impede o envio de desconto maior ou igual ao principal restante.</li>
+    </ul>
+    <div class="modulos"><strong>Areas afetadas:</strong>
+      <span class="pill">Receber</span><span class="pill">Pagamento</span></div>
+  </article>
+
+  <article class="change fix" id="c21">
+    <div class="change-header">
+      <span class="badge fix">Correcao</span>
+      <span class="data-tag">29/04/2026</span>
+    </div>
+    <h3>id_empresa enviado corretamente para a listagem sintetica do Pagar</h3>
+    <p>Ao acionar o botao Imprimir no Contas a Pagar, o id_empresa da sessao nao estava sendo enviado para o
+       relatorio sintetico, o que poderia gerar listagens incorretas em ambientes multi-empresa. Corrigido.</p>
+    <div class="modulos"><strong>Areas afetadas:</strong>
+      <span class="pill">Pagar</span></div>
+  </article>
+
+  <article class="change fix" id="c22">
+    <div class="change-header">
+      <span class="badge fix">Correcao</span>
+      <span class="data-tag">29/04/2026</span>
+    </div>
+    <h3>Ordem de abatimento: multa, juros e depois principal</h3>
+    <p>O abatimento dos encargos antes era proporcional. Agora segue uma ordem clara e padronizada:</p>
+    <ol style="margin-left:25px;">
+      <li>Primeiro abate a multa.</li>
+      <li>Depois os juros.</li>
+      <li>Por ultimo o valor principal.</li>
+    </ol>
+    <p>O rateio proporcional <em>entre multiplos titulos</em> permanece. Tambem foi corrigido um bug em que a
+       reabertura de titulos com recebimentos parciais anteriores poderia gerar "juros fantasma" (cobrados sobre
+       o valor original em vez do principal aberto).</p>
+    <div class="modulos"><strong>Areas afetadas:</strong>
+      <span class="pill">Receber</span><span class="pill">Pagar</span><span class="pill">Pagamento</span></div>
+  </article>
+
+  <article class="change fix" id="c23">
+    <div class="change-header">
+      <span class="badge fix">Correcao</span>
+      <span class="data-tag">29/04/2026</span>
+    </div>
+    <h3>Rateio de desconto baseado no principal restante de cada parcela</h3>
+    <p>O desconto distribuido entre varios titulos era calculado pelo valor corrigido (principal + encargos).
+       Isso causava distribuicao injusta quando duas parcelas tinham o mesmo principal mas datas de vencimento
+       diferentes (encargos diferentes). Agora o sistema considera somente o principal restante:
+       valor_original menos o ja recebido/pago, mais os juros/multa ja recebidos/pagos, menos descontos ja
+       aplicados. O resultado e um rateio proporcional ao principal real de cada titulo.</p>
+    <div class="modulos"><strong>Areas afetadas:</strong>
+      <span class="pill">Receber</span><span class="pill">Pagar</span><span class="pill">Pagamento</span></div>
+  </article>
+
+  <article class="change fix" id="c24">
+    <div class="change-header">
+      <span class="badge fix">Correcao critica</span>
+      <span class="data-tag">29/04/2026</span>
+    </div>
+    <h3>Preservacao de desconto, juros, multa e retencao ao editar o vencimento</h3>
+    <p>Bug de impacto direto no saldo dos titulos: ao editar a data de vencimento de um titulo ja recebido ou
+       ja pago, os campos de desconto, juros, multa e retencao do objeto original nao eram preservados, e o
+       metodo alterar() acabava zerando esses valores no banco. Como consequencia, um estorno posterior poderia
+       subtrair o desconto de um valor zerado, gerando saldo NEGATIVO.</p>
+    <p>A correcao garante que esses campos financeiros sejam mantidos ao editar o titulo.</p>
+    <div class="modulos"><strong>Areas afetadas:</strong>
+      <span class="pill">Receber</span><span class="pill">Pagar</span></div>
+  </article>
+
+  <article class="change feature" id="c25">
+    <div class="change-header">
+      <span class="badge feature">Nova funcionalidade</span>
+      <span class="data-tag">30/04/2026</span>
+    </div>
+    <h3>Edicao controlada de juros e multa em titulos ja baixados</h3>
+    <p>Foram criadas duas novas permissoes:</p>
+    <ul>
+      <li><strong>PAGAR_PAGAS_EDITAR_JUROS_MULTA</strong></li>
+      <li><strong>RECEBER_RECEBIDAS_EDITAR_JUROS_MULTA</strong></li>
+    </ul>
+    <p>Elas controlam, respectivamente no Pagar e no Receber, quem pode editar os campos de juros e multa em
+       titulos ja baixados. Ao confirmar a operacao, o sistema aplica a reducao proporcional desses ajustes
+       entre as parcelas envolvidas, mantendo a consistencia dos saldos.</p>
+    <div class="modulos"><strong>Areas afetadas:</strong>
+      <span class="pill">Pagar</span><span class="pill">Receber</span><span class="pill">Permissoes</span></div>
+  </article>
+
+</div>
+
+<footer>
+  Documento gerado a partir do historico Git da branch <strong>realese-lucas</strong>.<br>
+  Periodo coberto: 01/01/2026 ate 30/04/2026.
+</footer>
+
+</body>
+</html>
